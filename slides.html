@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Javascript Pro</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <style type="text/css">
+   @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,600,800,900');
+    @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+    body { font-family: 'Montserrat'; }
+    h1, h2, h3 {
+      font-family: 'Montserrat';
+      font-weight: 400;
+    }
+    .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    .remark-slide-content{background: transparent;}
+    .remark-slide {
+      background: #002244ff center center no-repeat;
+      background-size: cover;
+      color: #ffffff;
+    }
+    .remark-slide-number{color: #fff;font-size: 1rem;font-weight: bold;}
+
+  </style>
+</head>
+<body>
+  <textarea id="source" style="display:none;">
+
+    class: center, middle
+
+    # Javascript Pro
+
+    ![Targettrust](https://targettrust.com.br/wp-content/uploads/2018/02/TargetTrust.png)
+    <br/><img src="https://raw.githubusercontent.com/cerebrobr/adesivos/master/view/javascript.png" title="Javascript Pro" alt="Javascript Pro logo" style="max-height: 200px;clear: both;float: none;" />
+    
+
+
+    ---
+    # Javascript - Definição de alto nível
+
+    JavaScript é uma linguagem de programação que permite a você implementar itens complexos em páginas web — toda vez que uma página da web faz mais do que simplesmente mostrar a você informação estática — mostrando conteúdo que se atualiza em um intervalo de tempo, mapas interativos ou gráficos 2D/3D animados, etc. — você pode apostar que o JavaScript provavelmente está envolvido. 
+
+    É a terceira camada do bolo das tecnologias padrões da web.
+
+    <br/><img src="https://mdn.mozillademos.org/files/13502/cake.png" title="Javascript Pro" alt="Javascript Pro logo" style="max-height: 200px;clear: both; float: none;margin: 0px auto;" />
+    
+    ---
+    # Javascript   
+
+    - HTML é a linguagem de marcação que nós usamos para estruturar e dar significado para o nosso conteúdo web, por exemplo, definindo parágrafos, cabeçalhos, tabelas de conteúdo, ou inserindo imagens e vídeos na página.
+    - CSS é uma linguagem de regras de estilo que nós usamos para aplicar estilo ao nosso conteúdo HTML, por exemplo, definindo cores de fundo e fontes, e posicionando nosso conteúdo em múltiplas colunas.
+    - JavaScript é uma linguagem de programação que permite a você criar conteúdo que se atualiza dinamicamente, controlar múltimídias, imagens animadas, e tudo o mais que há de intessante. Ok, não tudo, mas é maravilhoso o que você pode efetuar com algumas linhas de código JavaScript.
+
+    ---
+    # Javascript
+
+    ## Então o que ele pode realmente fazer?
+
+    O núcleo da linguagem JavaScript consiste em alguns benefícios comuns da programação que permite a você fazer coisas como:
+
+    - Armazenar conteúdo útil em variáveis.
+    - Operações com pedaços de texto (conhecidos como "strings" em programação).
+    - Executar o código em resposta a determinados eventos que ocorrem em uma página da Web.
+    - E muito mais!
+    
+    ---
+    # Javascript   
+
+    O que é ainda mais empolgante é a funcionalidade construída no topo do núcleo da linguagem JavaScript. As APIs (Application Programming Interfaces - Interface de Programação de Aplicativos) provêem a você superpoderes extras para usar no seu código JavaScript. Elas geralmente se dividem em duas categorias.
+
+    <br/><img src="https://mdn.mozillademos.org/files/14721/browser.png " title="Javascript Pro" alt="Javascript Pro logo" style="max-height: 400px;clear: both; float: none;margin: 0px auto;" />
+    
+    ---
+    # Javascript   
+
+    - APIs de navegadores já vem implementadas no navegador, e são capazes de expor dados do ambiente do computador, ou fazer coisas complexas e úteis. Por exemplo:
+    - A  API DOM (Document Object Model) permite a você manipular HTML e CSS, criando, removendo e mudando HTML, aplicando dinamicamente novos estilos para a sua página, etc. Toda vez que você vê uma janela popup aparecer em uma página, ou vê algum novo conteúdo sendo exibido (como nós vimos acima na nossa simples demonstração), isso é o DOM em ação.
+    - A API de Geolocalização recupera informações geográficas. É assim que o Google Maps consegue entontrar sua localização e colocar em um mapa.
+    - As APIs Canvas e WebGL permite a você criar gráficos 2D e 3D animados. Há pessoas fazendo algumas coisas fantásticas usando essas tecnologias web — veja Chrome Experiments e webglsamples.
+    - APIs de áudio e vídeo como HTMLMediaElement e WebRTC permitem a você fazer coisas realmente interessantes com multimídia, tanto tocar música e vídeo em uma página da web, como capturar vídeos com a sua câmera e exibir no computador de outra pessoa (veja Snapshot demo para ter uma ideia).
+  
+    ---
+    # Javascript
+    
+    O Javascript é uma linguagem script dinâmica, fracamente tipada, baseada em protótipos e que possui funções de primeira classe.
+
+
+    Linguagem dinâmica: Linguagem de alto nível que executa em tempo de execução várias tarefas que outras linguagens executariam durante a compilação.
+
+     
+    Fracamente tipada:  Suporta conversão de tipos implícita, e não se declara o tipo na inicialização da variável.
+
+    Baseada em protótipos: Estilo de orientação a objetos onde classes não existem, dessa forma o reuso (herança para linguagens baseadas em classe) é feito clonando objetos existentes que servem assim de protótipos.
+
+ 
+    ---
+    # Estruturas de dados em Javascript
+
+    Para exercitar de forma real, você deverá abrir o console do seu navegador (no Google Chrome você pode usar o atalho ctrl + shift + j.
+
+    Dentro da seção console existente nas ferramentas do desenvolvedor, você deverá digitar os comandos abaixo, para perceber que tudo isso que te falei ali em cima é verdade. 
+
+    O resultado esperado está indicado na frente da seta ->. Caso o resultado não seja o que você conseguiu, certifique-se de ter digitado corretamente o código.
+
+    ---
+    # Estruturas de dados em Javascript
+
+    Ah, já ia me esquecendo… Digite TODO o código, não copie apenas!!! Isso será muito importante para a memorização e internalização dos conceitos.
+
+    ps: Não acredite em meus resultados, faça todos os testes! =)
+
+    Quando estamos dentro do console, a utilização do comando console.log() é desnecessária para visualizar o resultado de uma instrução, pois o resultado da operação sempre é retornado.
+
+    Vamos utilizar o console diretamente apenas para códigos curtos, pois para códigos maiores, iremos rodá-los através de nossa página html, e ai o comando console.log() será de grande utilidade.
+
+    ---
+
+    # Estruturas de dados em Javascript
+
+    ## Tipagem Dinamica
+    
+    JavaScript é uma fracamente tipada ou uma linguagem dinâmica. Isso significa que você não tem que declarar o tipo de uma variável, antes do tempo. O tipo vai ser determinada automaticamente enquanto o programa está sendo processado. Isso também significa que você pode ter a mesma variável como diferentes tipos:
+
+    ```javascript
+        var foo = 42; // Foo é um número agora 
+        var foo = "bar"; // Foo é uma String agora 
+        var foo = true; // Foo é um booleano agora
+    ```
+
+    ---
+    # Estruturas de dados em Javascript
+    ## Os tipos de dados
+
+    O que fazemos programando computadores é basicamente manipular dados. No JavaScript, chamamos esses dados de valores. Estes valores são divididos em dois tipos:
+
+    - Tipos Primitivos
+        - number (números)
+        - string (sequência de texto)
+        - boolean (booleanos ou valores de verdade)
+        - Tipos Especiais: null (nulo) e undefined (indefinido)
+    
+    
+    ---
+    # Estruturas de dados em Javascript
+    ## Os tipos de dados
+
+    Todos os valores em JavaScript diferentes dos citados acima, são pertencentes ao tipo object (objeto). Vejamos quais são eles:
+
+    - Tipos de Objetos
+        - arrays (vetores)
+        - funções
+        - Date (data)
+        - RegExp (expressões regulares)
+        - Error
+    
+    ---
+    # Estruturas de dados em Javascript
+    ## Os valores primitivos
+
+    Todos os tipos, exceto objetos definem valores imutáveis ​​(valores, que são incapazes de ser mudado). Por exemplo e, ao contrário de C, strings são imutáveis​​. Nós nos referimos a valores destes tipos como "valores primitivos".
+
+    ```javascript
+    /* verificação de tipos primitivos */
+    typeof 13 // tipo number
+    // -> "number"
+    typeof "javascript furtivo" // tipo string
+    // -> "string"
+    typeof true // tipo boolean
+    // -> "boolean"
+    ```
+
+    ---
+    # Estruturas de dados em Javascript
+    ## Os valores primitivos
+
+    ```javascript         
+    /* tipos primitivos especiais */
+    var semValor = null; // tipo null
+    typeof semValor
+    // -> "object" 
+     
+    var semAtribuir; // tipo undefined
+    typeof semAtribuir
+    // -> "undefined"
+    ```
+
+    ---
+    # Estruturas de dados em Javascript
+    ## Tipo Booleano
+
+    Esse tipo de dado, boolean, é bem específico, tendo apenas dois valores possíveis, true ou false (verdadeiro ou falso). Conseguimos obter estes valores através de operações de comparação (x é maior que y ? A resposta é sempre sim ou não, verdadeiro ou falso no caso) e através de um “truque” utilizando o operador unário ! (mais sobre operadores unários e comparações adiante).
+
+    Este operador ! (negação) inverte o valor passado à ele para um valor booleano oposto ao original. Vou explicar melhor, acompanhe comigo:
+
+    Quando aplicamos o operador ! à uma variável que tenha realmente um valor considerável, obtemos o valor false como retorno desta operação. Mas para ficar mais claro o que é um valor considerável, vou te explicar o que é um valor descartável.
+
+    
+    ---
+    # Estruturas de dados em Javascript
+    ## Valores Truthy e Falsy
+
+    Todos os tipos de valores em JavaScript têm, intrínsicamente (em sua essência), um respectivo valor booleano associado. Estes valores são claramente perceptíveis quando fazemos comparações entre valores e quando utilizamos o operador unário de negação !.
+
+    Valores falsy (falsos) são os que tem em sua essência o valor booleano false. Estes valores são:
+
+    - false
+    - 0 (zero)
+    - "" (string vazia)
+    - null
+    - undefined
+    - NaN
+
+    ---
+    # Estruturas de dados em Javascript
+    ## Valores Truthy e Falsy
+
+    Todos os outros valores em JavaScript são considerados truthy (verdadeiros). Alguns valores truthy peculiares são:
+
+    - "0" (zero como string)
+    - "false" (false como string)
+    - function() {} (funções vazias)
+    - [] (arrays vazios)
+    - {} (objetos vazios)
+    
+    ---
+    # Estruturas de dados em Javascript
+    ## Truques com o Operador
+
+    Agora que sabemos exatamente quais valores booleanos cada valor do JavaScript carrega, podemos tranquilamente e conscientemente utilizar o operador ! para obter o valor contrário do natural do valor em operação. Vamos aos exemplos, e portanto, ao console!:
+
+     ```javascript
+    !false // -> true
+    !0 // -> true
+    !"" // -> true
+    !NaN // -> true
+    !"0" // -> false
+    !"false" // -> false
+    !function() {} // -> false
+    !{} // -> false
+     ```
+
+    
+    ---
+    # Estruturas de dados em Javascript
+    ## Truques com o Operador
+
+    Um modo interessante de saber qual é o valor truthy ou falsy de um valor é negando-o duas vezes com o operador !. Sim, é como na Matemática, -1 x -1 = 1. Então temos que:
+
+    ```javascript
+    !!false // -> false
+    !!NaN // -> false
+    !!{} // -> true
+    !!function() {} // -> true
+    ```
+    
+    ---
+    # Estruturas de dados em Javascript
+    ## Tipo Null
+
+    O valor nulo é um valor JavaScript literal representando nulo ou um "vazio", ou seja, nenhum objeto de valor está presente.
+
+    O valor nulo é um literal (não é uma propriedade do objeto global, como pode ser indefinido). Em APIs, null é frequentemente recuperado no local onde um objeto pode ser esperado, mas nenhum objeto é relevante.
+
+    Quando a verificação de nulo ou indefinido cuidado com as diferenças entre a igualdade (==) e identidade (===) operadores (conversão de tipo é realizada com o primeiro).
+
+    ---
+    
+    # Estruturas de dados em Javascript
+    ## Tipo Null
+
+    ```javascript
+    // foo does not exist, it is not defined and has never been initialized:
+    > foo
+    "ReferenceError: foo is not defined"
+
+    // foo is known to exist now but it has no type or value:
+    > var foo = null; foo
+    "null"
+    ```
+
+    ---
+    # Estruturas de dados em Javascript
+    ## Tipo Null
+
+    Diferença entre null e undefined
+
+     ```javascript
+    typeof null // objeto (bug no ECMAScript, deve ser nulo) 
+    typeof undefined // indefinido 
+    null === undefined // false 
+    null == undefined // true
+    ```
+
+    ---
+    # Estruturas de dados em Javascript
+    ## Tipo Undefined
+
+    Uma variável que não foi atribuído um valor tem o valor undefined. 
+
+    Propriedade de atributos undefined:
+
+    - não é gravável 
+    - não é enumerável
+    - não é configurável
+    - Undefined é uma propriedade do objeto global, ou seja, é uma variável em âmbito global. O valor inicial de undefined é o valor primitivo undefined.
+
+    ---
+    # Estruturas de dados em Javascript
+    ## Tipo Undefined
+
+    Em navegadores modernos (JavaScript 1.8.5 / Firefox 4 +), undefined é uma propriedade não-configurável, não-gravável acordo com a especificação ECMAScript 5. Mesmo quando este não é o caso, evitar substituindo-lo.
+
+    Uma variável que não foi atribuído um valor é do tipo undefined. Um método ou declaração também retorna undefined se a variável que está a ser avaliado, não tem um valor atribuído. A função retorna um valor undefined se não foi devolvido.
+
+    Desde que não definido não é uma palavra reservada, ele pode ser usado como um identificador (nome da variável) em qualquer âmbito excepto o âmbito global.
+
+    ---
+    # Estruturas de dados em Javascript
+    ## Tipo Undefined
+
+
+     ```javascript
+    // logs "foo string"
+    (function(){ var undefined = 'foo'; console.log(undefined, typeof undefined); })();
+
+    // logs "foo string"
+    (function(undefined){ console.log(undefined, typeof undefined); })('foo');
+    ```
+
+    ---
+    # Tratamento de erros em Javascript
+  
+    
+    ---
+    # Introdução ao jQuery
+
+    ---
+    # AJAX    
+
+    ---
+    # Orientação a Objetos em JavaScript
+
+    ---
+    # Funções como objetos
+    
+    ---
+    # Funções de Alta Ordem 
+
+    ---
+    #  API JS + HTML5
+
+
+    ---
+    # EcmaScript 6+
+
+
+    ---
+
+    # Promises
+
+
+    ---
+
+    # Transpiladores
+    
+    ---
+    #Referências
+
+    - https://developer.mozilla.org/pt-BR/docs/Learn/JavaScript/First_steps/O_que_e_JavaScript
+    
+  </textarea>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/remark/0.14.0/remark.min.js"></script>
+  <script>
+    var slideshow = remark.create();
+  </script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-#Modularização em JavaScript
+# Modularização em JavaScript
 
 Modularização implica na divisão das funcionalidades de um código em partes distintas. Os módulos compõe peças que podem ser adicionadas e removidas quando necessário, vejam:&nbsp;**reuso de código**.
 

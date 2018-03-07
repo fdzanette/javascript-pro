@@ -1,31 +1,31 @@
-##Documentação
+## Documentação
 http://docs.themoviedb.apiary.io/#reference/movies/movieid/get
 
-##API
+## API
 http://api.themoviedb.org/3/
 
-##Token
+## Token
 246bf886104d519a1d2bf62aef1054ff
 
-##Imagens
+## Imagens
 https://image.tmdb.org/t/p/w370/
 
-##Populares
+## Populares
 http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=246bf886104d519a1d2bf62aef1054ff&page=1
 
-##Ultimos
+## Ultimos
 http://api.themoviedb.org/3/movie/latest?sort_by=popularity.desc&api_key=246bf886104d519a1d2bf62aef1054ff&page=1
 
-##Em Cartaz
+## Em Cartaz
 http://api.themoviedb.org/3/movie/now_playing?api_key=246bf886104d519a1d2bf62aef1054ff&page=1
 
-##Aguardados
+## Aguardados
 http://api.themoviedb.org/3/movie/upcoming?api_key=246bf886104d519a1d2bf62aef1054ff&page=1
 
-##TOP
+## TOP
 http://api.themoviedb.org/3/movie/top_rated?api_key=246bf886104d519a1d2bf62aef1054ff&page=1
 
-###Exemplo de Requisição
+### Exemplo de Requisição
 
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {

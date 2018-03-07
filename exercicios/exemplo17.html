@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Javascript Pro | jQuery</title>
+    <script src="https://code.jquery.com/jquery-2.0.3.js"></script>
+    <style>
+    div {
+        height:100px;
+        width:100px;
+        display: inline-block;
+    }
+
+    #red {
+        background-color:#FF0000;
+    }
+
+    #blue {
+        background-color:#0000FF;
+    }
+
+    #yellow {
+        background-color:#E2BE22;
+    }
+
+    #green {
+        background-color:#008800;
+    }
+</style>
+</head>
+<body>
+    <div id="red"></div>
+    <div id="blue"></div>
+    <div id="yellow"></div>
+    <div id="green"></div>
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+           $('div').mouseenter(function() {
+               $(this).animate({
+                   height: '+=10px'
+               });
+           });
+           $('div').mouseleave(function() {
+               $(this).animate({
+                   height: '-=10px'
+               }); 
+           });
+           $('div').click(function() {
+               $(this).toggle(1000);
+           }); 
+       });
+   </script>
+</body>
+</html>
+

@@ -20,6 +20,20 @@
     }
     .remark-slide-number{color: #fff;font-size: 1rem;font-weight: bold;}
 
+    .remark-slide-content h1 {
+        font-size: 2.2rem;
+    }
+
+    .remark-slide-content h2 {
+        font-size: 1.9rem;
+    }
+    .remark-slide-content h3 {
+        font-size: 1.4rem;
+    }
+    a, a:link, a:visited, a:hover, a:active{
+        color: #007FFF;
+    }
+
   </style>
 </head>
 <body>
@@ -34,6 +48,10 @@
     
 
 
+    ---
+    class: center, middle
+    # Javascript - Definição de alto nível
+ 
     ---
     # Javascript - Definição de alto nível
 
@@ -91,281 +109,1008 @@
 
     Baseada em protótipos: Estilo de orientação a objetos onde classes não existem, dessa forma o reuso (herança para linguagens baseadas em classe) é feito clonando objetos existentes que servem assim de protótipos.
 
- 
     ---
-    # Estruturas de dados em Javascript
+    name: erros
+    class: middle, center
+    # Tratamento de erros em Javascript
 
-    Para exercitar de forma real, você deverá abrir o console do seu navegador (no Google Chrome você pode usar o atalho ctrl + shift + j.
-
-    Dentro da seção console existente nas ferramentas do desenvolvedor, você deverá digitar os comandos abaixo, para perceber que tudo isso que te falei ali em cima é verdade. 
-
-    O resultado esperado está indicado na frente da seta ->. Caso o resultado não seja o que você conseguiu, certifique-se de ter digitado corretamente o código.
-
+    O processo de encontrar erros(bugs) nos programas é chamado de depuração.
+  
     ---
-    # Estruturas de dados em Javascript
-
-    Ah, já ia me esquecendo… Digite TODO o código, não copie apenas!!! Isso será muito importante para a memorização e internalização dos conceitos.
-
-    ps: Não acredite em meus resultados, faça todos os testes! =)
-
-    Quando estamos dentro do console, a utilização do comando console.log() é desnecessária para visualizar o resultado de uma instrução, pois o resultado da operação sempre é retornado.
-
-    Vamos utilizar o console diretamente apenas para códigos curtos, pois para códigos maiores, iremos rodá-los através de nossa página html, e ai o comando console.log() será de grande utilidade.
-
-    ---
-
-    # Estruturas de dados em Javascript
-
-    ## Tipagem Dinamica
-    
-    JavaScript é uma fracamente tipada ou uma linguagem dinâmica. Isso significa que você não tem que declarar o tipo de uma variável, antes do tempo. O tipo vai ser determinada automaticamente enquanto o programa está sendo processado. Isso também significa que você pode ter a mesma variável como diferentes tipos:
+    # Tratamento de erros em Javascript
+  
+    JavaScript pode ser feito de uma forma mais rigorosa, permitindo que o modo seja estrito. Para obter esse modo basta inserir uma string “use strict” na parte superior de um arquivo ou no corpo de uma função. Veja um exemplo:
 
     ```javascript
-        var foo = 42; // Foo é um número agora 
-        var foo = "bar"; // Foo é uma String agora 
-        var foo = true; // Foo é um booleano agora
+
+    function canYouSpotTheProblem() {
+        "use strict";
+        for (counter = 0; counter < 10; counter++)
+            console.log("Happy happy");
+    }
+    ​
+    canYouSpotTheProblem(); // ReferenceError: counter is not defined
+
     ```
 
-    ---
-    # Estruturas de dados em Javascript
-    ## Os tipos de dados
-
-    O que fazemos programando computadores é basicamente manipular dados. No JavaScript, chamamos esses dados de valores. Estes valores são divididos em dois tipos:
-
-    - Tipos Primitivos
-        - number (números)
-        - string (sequência de texto)
-        - boolean (booleanos ou valores de verdade)
-        - Tipos Especiais: null (nulo) e undefined (indefinido)
-    
+    Normalmente, quando você esquece de colocar var na frente de sua variável como acontece no contador do exemplo, o JavaScript cria uma variável global para utiliza-la, no entando no modo estrito um erro é relatado. Isto é muito útil. Porém deve-se notar que isso não funciona quando a variável em questão já existe como uma variável global, isso é apenas para atribuição ou criação.
     
     ---
-    # Estruturas de dados em Javascript
-    ## Os tipos de dados
+    # Tratamento de erros em Javascript    
 
-    Todos os valores em JavaScript diferentes dos citados acima, são pertencentes ao tipo object (objeto). Vejamos quais são eles:
-
-    - Tipos de Objetos
-        - arrays (vetores)
-        - funções
-        - Date (data)
-        - RegExp (expressões regulares)
-        - Error
+    Por exemplo, considere o seguinte código que chama um construtor sem a nova palavra-chave na qual seu objeto não vai se referir a um objeto recém-construído:
     
-    ---
-    # Estruturas de dados em Javascript
-    ## Os valores primitivos
+    ```javascript
+    function Person(name) { this.name = name; }
+    var ferdinand = Person("Ferdinand"); // oops
+    console.log(name); // Ferdinand
 
-    Todos os tipos, exceto objetos definem valores imutáveis ​​(valores, que são incapazes de ser mudado). Por exemplo e, ao contrário de C, strings são imutáveis​​. Nós nos referimos a valores destes tipos como "valores primitivos".
+    ```
+    
+    Assim, a falsa chamada para Person foi bem sucessida, mas retornou um valor indefinido e criou uma variável global. No modo estrito, o resultado é diferente.
+   
+    ```javascript
+    "use strict";
+    function Person(name) { this.name = name; } // Oops, forgot 'new'
+    var ferdinand = Person("Ferdinand");
+    // TypeError: Cannot set property 'name' of undefined
+
+    ```
+
+    Somos imediatamente informados de que algo está errado. Isso é útil.
+
+
+    ---
+    # Tratamento de erros em Javascript
+
+    Com o objetivo de tratar exceções e controlar erros, em tempo de execução, algumas linguagens implementam alguns mecanismos interessantes, como por exemplo Go, que você pode trabalhar com funções de retornos múltiplos para passar erro e dados em caso de sucesso; e Bash que se trata erros quando o exit do programa é maior que zero 0, já que zero significa sucesso, sem falar no “exception” de comandos encadeados com & &. 
+  
+    ---
+    # Tratamento de erros em Javascript
+
+    As exceções são utilizadas como uma forma de feedback, para cógido saber o que fazer quando cair numa situação de erro. 
+
+    Agora você precisa entender que os statements (declarações, ou “comandos”) e os objetos citados aqui são coisas separadas, apesar de funcionar em conjunto. Mais precisamente, vamos falar sobre 3 coisas:
+
+    - Objetos do tipo Error
+
+    - o throw
+
+    - o bloco try...catch
+  
+    ---
+    # Tratamento de erros em Javascript
+
+    ## Objetos do tipo  _Error_
+
+    Sabe quando o console te mostra algum erro de sintaxe, ou um erro de referência, falando que uma variável ou função não existe? Aquelas mensagens esquisitas são dos objetos de  `Error`. Basicamente, esses objetos tem seu prototype composto pelos seguintes itens:
+
+    -   `.constructor`: que inicializa os objetos, é chamado quando se instancia com o  `new`, ou apenas chamando como função  `Error()`;
+        
+    -   `.message`: a mensagem de erro, que é passada como primeiro argumento do construtor;
+        
+    -   `.name`: o tipo do erro. Ex.: “_Error_”, “_ReferenceError_”;
+        
+    -   `.toString()`: herdado do  `Object.prototype.toString()`  e retorna o valor de  `.message`.
+  
+    ---
+    # Tratamento de erros em Javascript
+
+    A propriedade  `.name`  especifica o tipo do Erro. Vamos dar uma olhada nos erros  **nativos**  e quando aparecem:
+
+    -   **_EvalError_**: lançado quando a função  `eval()`  lança algum erro;
+        
+    -   **_RangeError_**: lançado quando encontra algum valor não está dentro do intervalo permitido;
+        
+    -   **_ReferenceError_**: lançado quando uma referência inválida é detectada;
+        
+    -   **_SyntaxError_**: lançado quando existe algum erro no  _parse_, no momento que a  _engine_  lê o código para interpretá-lo;
+        
+    -   **_TypeError_**: lançado quando um parâmetro de uma função não é do tipo desejado;
+        
+    -   **_URIError_**: lançado quando alguma operação de URI,  `encodeURI()`  ou  `decodeURI()`, recebem parâmetros inválidos.
+  
+    ---
+    # Tratamento de erros em Javascript
+
+    Bom, este são os erros nativos. Já que são extensões do objeto  `Error`, nós também podemos criar nossos erros, para poder tratá-los da melhor forma possível. Exemplo:
+
+    ```javscript
+    // Erro para regras de negócio
+    class BusinessError extends Error {
+      constructor(msg) {
+        super(msg);
+      }
+
+      // e podemos adicionar algum método específico
+    }
+
+    ```
+  
+    ---
+    # Tratamento de erros em Javascript
+    ## O “lançamento”:  _throw_
+
+    Reparou que falei dos erros serem lançados? É exatamente isso que acontece.
+
+    Durante a execução do programa, se houver algum tipo de inconsistência, dos tipos nativos de erro, ou se houver alguma situação que devemos avisar sobre erros, utiliza-se o  `throw`  para lançar “coisas” para que “alguém” faça algo com essa coisa.
+  
+    ---
+    # Tratamento de erros em Javascript
+
+    Eu disse lançar “coisas” porque você pode lançar qualquer coisa, dentre elas, objetos de erro. Por exemplo:
 
     ```javascript
-    /* verificação de tipos primitivos */
-    typeof 13 // tipo number
-    // -> "number"
-    typeof "javascript furtivo" // tipo string
-    // -> "string"
-    typeof true // tipo boolean
-    // -> "boolean"
+    // lançar um erro de negócio, com nossa classe `BusinessError`
+    throw new BusinessError('CPF inválido');
+
+    // lançar uma string de erro
+    throw "Erro: foo";
+
+    // lançar o status de erro HTTP
+    throw 404;
+
+    // lançar objetos literais
+    throw {
+      message: "Erro: bar",
+      toString: function() {
+        return this.message;
+      }
+    };
+
+    // lançar funções
+    throw function() { /* ¯\_(ツ)_/¯ */ }
+
     ```
-
+  
     ---
-    # Estruturas de dados em Javascript
-    ## Os valores primitivos
-
-    ```javascript         
-    /* tipos primitivos especiais */
-    var semValor = null; // tipo null
-    typeof semValor
-    // -> "object" 
-     
-    var semAtribuir; // tipo undefined
-    typeof semAtribuir
-    // -> "undefined"
-    ```
-
-    ---
-    # Estruturas de dados em Javascript
-    ## Tipo Booleano
-
-    Esse tipo de dado, boolean, é bem específico, tendo apenas dois valores possíveis, true ou false (verdadeiro ou falso). Conseguimos obter estes valores através de operações de comparação (x é maior que y ? A resposta é sempre sim ou não, verdadeiro ou falso no caso) e através de um “truque” utilizando o operador unário ! (mais sobre operadores unários e comparações adiante).
-
-    Este operador ! (negação) inverte o valor passado à ele para um valor booleano oposto ao original. Vou explicar melhor, acompanhe comigo:
-
-    Quando aplicamos o operador ! à uma variável que tenha realmente um valor considerável, obtemos o valor false como retorno desta operação. Mas para ficar mais claro o que é um valor considerável, vou te explicar o que é um valor descartável.
-
+    # Tratamento de erros em Javascript
     
-    ---
-    # Estruturas de dados em Javascript
-    ## Valores Truthy e Falsy
+    ## O bloco  _try..catch_
 
-    Todos os tipos de valores em JavaScript têm, intrínsicamente (em sua essência), um respectivo valor booleano associado. Estes valores são claramente perceptíveis quando fazemos comparações entre valores e quando utilizamos o operador unário de negação !.
+    Enquanto se  _tenta_  executar determinado trecho de código, pode ser que tenhamos erros que quebram o fluxo e todo o programa, não é mesmo? Para resolver esse problema, podemos tratar alguns erros no caso de  **_falha_**  durante a  **_tentativa_**. Por isso, utilizamos o  `try..catch`.
 
-    Valores falsy (falsos) são os que tem em sua essência o valor booleano false. Estes valores são:
+    A responsabilidade desta estrutura é  **tentar executar algo**  e, caso dê algum problema durante a execução,  **pegar os erros**  e tratá-los da forma mais adequada possível.
 
-    - false
-    - 0 (zero)
-    - "" (string vazia)
-    - null
-    - undefined
-    - NaN
+    Então:
+
+    > O  `catch`  é quem pega as coisas lançadas pelo  `throw`  dentro do bloco  `try`
 
     ---
-    # Estruturas de dados em Javascript
-    ## Valores Truthy e Falsy
-
-    Todos os outros valores em JavaScript são considerados truthy (verdadeiros). Alguns valores truthy peculiares são:
-
-    - "0" (zero como string)
-    - "false" (false como string)
-    - function() {} (funções vazias)
-    - [] (arrays vazios)
-    - {} (objetos vazios)
+    # Tratamento de erros em Javascript
     
-    ---
-    # Estruturas de dados em Javascript
-    ## Truques com o Operador
-
-    Agora que sabemos exatamente quais valores booleanos cada valor do JavaScript carrega, podemos tranquilamente e conscientemente utilizar o operador ! para obter o valor contrário do natural do valor em operação. Vamos aos exemplos, e portanto, ao console!:
-
-     ```javascript
-    !false // -> true
-    !0 // -> true
-    !"" // -> true
-    !NaN // -> true
-    !"0" // -> false
-    !"false" // -> false
-    !function() {} // -> false
-    !{} // -> false
-     ```
-
-    
-    ---
-    # Estruturas de dados em Javascript
-    ## Truques com o Operador
-
-    Um modo interessante de saber qual é o valor truthy ou falsy de um valor é negando-o duas vezes com o operador !. Sim, é como na Matemática, -1 x -1 = 1. Então temos que:
+    Para entender melhor:
 
     ```javascript
-    !!false // -> false
-    !!NaN // -> false
-    !!{} // -> true
-    !!function() {} // -> true
+
+    // "Tentamos" executar algo
+    try {
+
+      /* ... */
+
+      // Caso haja algum erro que precise de tratamento (ex.: de negócio)
+      if ( !usuario.permissao ) {
+
+        // "Lançamos" um objeto de erro para o `catch`
+        throw new BusinessError("Acesso não autorizado");
+
+      }
+
+      /* ... */
+
+    // O `catch` "pega" qualquer coisa lançada no `try`, através do `throw`
+    } catch (err) {
+
+      // e fazemos o que precisar com isso
+      alert(err.message);
+
+    }
+
+
     ```
-    
+
+    Lembre o seguinte: qualquer erro nativo também é lançado e cairá no  `catch`.
+  
     ---
-    # Estruturas de dados em Javascript
-    ## Tipo Null
+    # Tratamento de erros em Javascript
 
-    O valor nulo é um valor JavaScript literal representando nulo ou um "vazio", ou seja, nenhum objeto de valor está presente.
+    ## _finally_
 
-    O valor nulo é um literal (não é uma propriedade do objeto global, como pode ser indefinido). Em APIs, null é frequentemente recuperado no local onde um objeto pode ser esperado, mas nenhum objeto é relevante.
-
-    Quando a verificação de nulo ou indefinido cuidado com as diferenças entre a igualdade (==) e identidade (===) operadores (conversão de tipo é realizada com o primeiro).
-
-    ---
-    
-    # Estruturas de dados em Javascript
-    ## Tipo Null
+    O bloco  `try..catch`  também permite a execução de coisas no fim da execução do bloco, tendo sucesso ou caindo no  `catch`. Para isso, utilizamos o bloco  `finally`. Exemplo:
 
     ```javascript
-    // foo does not exist, it is not defined and has never been initialized:
-    > foo
-    "ReferenceError: foo is not defined"
+    try {
+       /* ... */
+        // "Lançamos" um objeto de erro para o `catch`
+        throw new BusinessError("Acesso não autorizado");
 
-    // foo is known to exist now but it has no type or value:
-    > var foo = null; foo
-    "null"
+    } catch (e) {
+       // e fazemos o que precisar com isso
+      alert(err.message);
+
+    } finally {
+      // Sempre executa ao finalizar o `try` ou o `catch`
+      // É um bom lugar pra executar coisas como:
+      //  * fechar uma transação com o DB;
+      //  * fechar arquivos que foram abertos para leitura;
+      //  * atualizar o estado da view;
+
+    }
+
+
     ```
-
+  
     ---
-    # Estruturas de dados em Javascript
-    ## Tipo Null
+    # Tratamento de erros em Javascript
 
-    Diferença entre null e undefined
 
-     ```javascript
-    typeof null // objeto (bug no ECMAScript, deve ser nulo) 
-    typeof undefined // indefinido 
-    null === undefined // false 
-    null == undefined // true
-    ```
+    ## Lançando Seus Próprios Erros
 
+    Lançar seus próprios erros é uma excelente prática para você distinguir suas próprias exceções da do browser e dar contexto ao desenvolvedor para que ele possa mais facilmente resolver o problema.
+    
+    ```javascript
+    function MyError(message, solution, location) {  
+        this.message = message + " Solution:" + solution +  " Location:" + location;
+        this.solution = solution;
+        this.location = location;
+    }
+
+    MyError.prototype = new Error();  
+    MyError.prototype.name = "My Error"; 
+    ``` 
     ---
-    # Estruturas de dados em Javascript
-    ## Tipo Undefined
+    # Tratamento de erros em Javascript
 
-    Uma variável que não foi atribuído um valor tem o valor undefined. 
+    ### Observação
 
-    Propriedade de atributos undefined:
-
-    - não é gravável 
-    - não é enumerável
-    - não é configurável
-    - Undefined é uma propriedade do objeto global, ou seja, é uma variável em âmbito global. O valor inicial de undefined é o valor primitivo undefined.
-
-    ---
-    # Estruturas de dados em Javascript
-    ## Tipo Undefined
-
-    Em navegadores modernos (JavaScript 1.8.5 / Firefox 4 +), undefined é uma propriedade não-configurável, não-gravável acordo com a especificação ECMAScript 5. Mesmo quando este não é o caso, evitar substituindo-lo.
-
-    Uma variável que não foi atribuído um valor é do tipo undefined. Um método ou declaração também retorna undefined se a variável que está a ser avaliado, não tem um valor atribuído. A função retorna um valor undefined se não foi devolvido.
-
-    Desde que não definido não é uma palavra reservada, ele pode ser usado como um identificador (nome da variável) em qualquer âmbito excepto o âmbito global.
-
-    ---
-    # Estruturas de dados em Javascript
-    ## Tipo Undefined
-
-
-     ```javascript
-    // logs "foo string"
-    (function(){ var undefined = 'foo'; console.log(undefined, typeof undefined); })();
-
-    // logs "foo string"
-    (function(undefined){ console.log(undefined, typeof undefined); })('foo');
-    ```
+    Este mecanismo de tratamento de erros em tempo de execução (com  `try..catch..finally`  e  `throw`) também é adotado por outras linguagens. Podemos citar PHP e Java como exemplo e cada uma delas tem seus objetos de erro específicos. JavaScript utiliza os objetos do tipo  `Error`, PHP e Java tem seus objetos de  `Exception`, que servem pra mesma coisa.
 
     ---
     # Tratamento de erros em Javascript
   
+    ## Referências
+
+    -   Error Objects -  [http://www.ecma-international.org/ecma-262/7.0/index.html#sec-error-objects](http://www.ecma-international.org/ecma-262/7.0/index.html#sec-error-objects)
+    -   ECMAScript Language: Statements and Declarations -  [http://www.ecma-international.org/ecma-262/7.0/index.html#sec-ecmascript-language-statements-and-declarations](http://www.ecma-international.org/ecma-262/7.0/index.html#sec-ecmascript-language-statements-and-declarations)
+    -   Error -  [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error)
+    -   throw -  [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/throw](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/throw)
+    -   try…catch -  [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try…catch](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch)
+    -   try…catch…finally Statement (JavaScript) -  [https://docs.microsoft.com/en-us/scripting/javascript/reference/try-dot-dot-dot-catch-dot-dot-dot-finally-statement-javascript](https://docs.microsoft.com/en-us/scripting/javascript/reference/try-dot-dot-dot-catch-dot-dot-dot-finally-statement-javascript)
+    -   throw Statement (JavaScript) -  [https://docs.microsoft.com/en-us/scripting/javascript/reference/throw-statement-javascript](https://docs.microsoft.com/en-us/scripting/javascript/reference/throw-statement-javascript)
+    -   Error Object (JavaScript) -  [https://docs.microsoft.com/en-us/scripting/javascript/reference/error-object-javascript](https://docs.microsoft.com/en-us/scripting/javascript/reference/error-object-javascript)
+    
+
+    ---
+    class: center, middle
+    # Escopo e Hoisting
+
+    --- 
+    # Escopo e Hoisting
+
+    _Variable hoisting_  é o procedimento do JavaScript que move declarações para o topo de seus escopos atuais. Por não ser explícito, desconhecer como isso funciona pode trazer boas dores de cabeça.
+
+    Qual você acha que será a saída no Console do seguinte script?
+
+    ```javascript
+    var number = 10;
+    function init(){
+        console.log(number);
+        var number = 5;
+    }
+    init();
+
+    ```   
+
+    Existe uma grande chance de que você achou que a saída seria  `10`. Por causa da forma como o JavaScript trata declarações e escopos, a saída deste script é  `undefined`  (!). Isso mesmo, pode conferir no Console do seu navegador. Para entender como e porque isso acontece, é muito importante primeiro compreender o escopo no JavaScript.      
+    
+    ---
+    
+    # Escopo e Hoisting 
+
+    ## Um pouco sobre escopo no JavaScript
+
+    Escopo em uma linguagem de programação é basicamente a seção em que suas declarações estarão visíveis. No JavaScript, temos o escopo global, que pode ser acessado por qualquer script da página, e o local, que está visível apenas para quem está do lado de dentro. Funções são a principal forma de criar escopos locais no JavaScript. Para simplificar este artigo tratarei das outras maneiras de criar escopos locais apenas ao final.
+
+    Tudo isso significa que as variáveis que são declaradas dentro de um escopo local só podem ser acessadas por quem estiver do lado de dentro.
+
+
+    ---
+    
+    # Escopo e Hoisting  
+    ## Um pouco sobre escopo no JavaScript
+
+    Uma variável  `count` declarada dentro da função  `countHumans`  não estará visível na função  `countAnimals`  no exemplo a seguir:
+
+    ```javascript
+    var humans = ['Hugo', 'Jéssica', 'Victor'];
+    var animals = ['dog', 'cat'];
+
+    function countHumans() {
+        var count = humans.length;
+        return count;
+    } // => 3
+
+    function countAnimals() {
+        var count = animals.length;
+        return count;
+    } // => 2
+
+    ```
+
+    Graças a essa funcionalidade, podemos utilizar bons nomes nas nossas variáveis sem nos preocuparmos demais com conflitos entre elas.
+
+    Escopos que estão dentro de outros podem acessar todas as variáveis ali declaradas, tanto para ler quanto para mudar seus valores.       
+    
+    ---
+    # Escopo e Hoisting  
+
+    ## O que é Escopo?
+    Em ES5, as funções são nosso delimitador de escopo de fato para declaração de variáveis. Isso significa que blocos usuais de loops e estruturas condicionais (como if,for, while, switch e try) NÃO delimitam escopos, diferente de muitas outras linguagens como C, C++, Java e ES2015.
+    Portanto, esses blocos compartilham do mesmo escopo que a função que os contém. Dessa forma, pode ser perigoso declarar variáveis dentro de blocos, já que vai parecer que a variável pertence apenas ao bloco. Esse é um problema comum para programadores vindos de linguagens com escopos em blocos.       
+
+    ---
+    # Escopo e Hoisting  
+
+    ## Como entrar em um escopo?
+
+    Temos quatro maneiras:
+
+    -   Definido pela linguagem: todo escopo possui o this e, caso seja uma função, também o arguments;
+    -   Declaração de uma variável: variáveis declaradas como var name;
+    -   Declaração de uma função: funções declaradas na forma function family() {};
+    -   Parâmetros de uma função: caso uma função seja chamada na forma brother (name), podendo ser brother (name, mother, …), sendo name e mother entram no escopo da função.       
+        
+    ---
+    # Escopo e Hoisting  
+
+    Como poderia ficar nosso código:
+
+    ```javascript
+    var val = 1;
+    scopeBloc();
+
+    function scopeBloc() {    
+    for(var i = 0; i < 10; i++) {
+        var newVal = val + i;
+        console.log(newVal); // 10
+     }     
+     console.log(newVal); // 10
+     console.log(val); // 1 
+    }
+
+    ```
+
+    No código acima ainda podemos acessar a varivel newVal fora do bloco do loop, bem como podemos criar um escopo dentro do loop em ES5 utilizando ‘IIFE’. 
+
+    
+    ---
+    # Escopo e Hoisting   
+
+    Essa era nossa única maneira de se criar um escopo dentro de um bloco, mas com a vinda do ES2015 isto mudou.  
+    
+    ```javascript
+    var val = 1;
+    scopeBloc();
+     
+    function scopeBloc() {    
+        for(var i = 0; i < 10; i++) {
+            (function() {
+                var newVal = val + i;
+                console.log(newVal); // 10
+            }());
+        }     
+        console.log(newVal); // ReferenceError: newVal is not defined
+        console.log(val); // 1 
+    }
+
+    ```    
+    ---
+    # Escopo e Hoisting 
+
+    Vamos ver se ficou claro:
+
+    ```javascript
+    var val = 1; // escopo global
+    var text = "Estudando Escopo"; // escopo global
+    function scopeBloc() {    
+        for(var i = 0; i < 10; i++) { // i escopo local
+            (function() {
+                var newVal = val + i; // newVal escopo do bloco if
+                console.log(newVal); // vai fazer o loop de 1 a 10
+                console.log(text); 
+                // var fazer o loop com a string Estudando Escopo
+            }());
+         }
+         var getPhrase =  function() {
+             var val = 2; // ecopo de bloco
+             Pharse = "I love JavaScript"; 
+             // escopo global (var não foi utilizada)
+            console.log(val); // 2
+            console.log(i); // 10
+            console.log(text); // Estudando Escopo
+            console.log(Pharse); // I love JavaScript
+         }();
+         console.log(newVal); // ReferenceError: newVal is not defined
+         console.log(val); // 1 
+    }     
+    scopeBloc();
+    console.log(val); // 1
+    console.log(text); // Estudando Escopo
+    console.log(Pharse); // I love JavaScript
+    ```
+
+    ---
+    # Escopo e Hoisting   
+
+    E o que é this?
+
+    This é uma referência ao contexto no qual a função está sendo executada, ao objeto ao qual ela pertence. Em grande parte de outras linguagens othis é uma referência ao objeto atual instanciado. Contudo, para dar um nó na sua mente, em JavaScript o this vai depender de como sua função foi inicializada.
+
+    Algumas formas de chamar uma função:
+
+    1.  Diretamente
+    2.  Como um método
+    3.  Explicitamente aplicada
+    4.  Como construtor
+      
+    ---
+    # Escopo e Hoisting   
+
+    ## Diretamente
+
+    ```javascript
+    var text = 'Escopo em Javascript'
+    function createPhrase(textA, textB) {
+        var textC = 'Quando uma função é chamada diretamente'
+        console.log(this); // imprimi window
+        console.log(textA + textB + ' - ' + textC); 
+        // Entendendo como funciona Escopo em Javascript 
+        // Quando uma função é chamada diretamente 
+    }
+     
+    createPhrase('Entendendo como funciona ', text);
+
+    ```
+
+    Quando uma função é chamada diretamente, this fará referência ao contexto global, que no caso dos navegadores é o objeto window.
+
+
+    ---
+    # Escopo e Hoisting   
+
+    ## Como um método
+
+    São funções armazenadas dentro das propriedades de um objeto. Se uma função for chamada como um método de um objeto, então this, dentro dessa função, fará referência a esse objeto.
+    
+    ```javascript
+    var text = 'Escopo em Javascript'
+    var myObject = {
+        textA: 'Entendendo como funciona ',
+        textB: 'Quando uma função é chamada com um método',
+        createPhrase: function (textC) {
+            console.log(this.textA + textC + ' - ' + this.textB); 
+            // Entendendo como funciona Escopo em Javascript
+            // Quando uma função é chamada com um método
+        }
+    };
+     
+    myObject.createPhrase(text);
+    ```
+    ---
+    # Escopo e Hoisting   
+
+    ## Explicitamente aplicada
+
+    Uma função pode ser aplicada explicitamente a qualquer objeto, e para isso utilizamos os métodos call ou apply.
+
+    Os métodos call e apply nos permitem controlar o valor de this e assim definir a qual objeto ele fará referência. A diferença entre eles é a forma que recebem os parâmetros e também a velocidade de execução que pode variar de navegador para navegador.
+
+    ```javascript
+        var text = 'Escopo em Javascript';
+        var myObject = {
+            phraseC: 'Entendendo como funciona ',
+            phraseD: 'Quando uma função é aplicada explicitamente'
+        };
+         
+        function createPhrase(phraseA, phraseB) {
+            console.log(this); // imprimi objeto
+            console.log(this.phraseC + phraseA  + ' - ' +  this.phraseD  + ' => ' + phraseB); 
+            // Entendendo como funciona Escopo em Javascript 
+            // Quando uma função é aplicada explicitamente => entenderam ?
+        }
+         
+        createPhrase.call(myObject, text, 'entenderam ?');  
+        createPhrase.apply(myObject, [text, 'entenderam ?']);
+
+    ```
+
+    ---
+    # Escopo e Hoisting   
+
+     ## Explicitamente aplicada
+
+    Na função createPhrase faço referência ao objeto ‘myObject’. Com isso, consigo acessar os nós dele: this.phraseC que tem como valor Entendendo como funciona e this.phraseD que tem como valor Quando uma função é aplicada explicitamente.
+
+    ---
+    # Escopo e Hoisting   
+
+    ## Como um construtor
+
+    Quando uma função é usada como um construtor (usando a palavra-chave new), this fará referência ao novo objeto que está sendo construído:
+
+    ```javascript
+    function work() {
+        this.startWork = '8:00';
+        this.finishWork = '19:00';
+        this.officialName = officialName();
+     
+        this.getstartWork = function() {
+            return this.startWork;
+        };
+     
+        this.getfinishWork = function() {
+            return this.finishWork;
+        };
+     
+        this.getOfficialName = function() {
+         return this.officialName;
+        };
+    };
+     
+
+    ```
+    
+    ---
+    # Escopo e Hoisting   
+
+    ## Como um construtor
+
+    Quando uma função é usada como um construtor (usando a palavra-chave new), this fará referência ao novo objeto que está sendo construído:
+
+    ```javascript
+    function officialName() {
+        var name = 'Luiz Celso F Alves';
+        return name;
+    };
+     
+    var myWork1 = new work();
+    var myWork2 = new work();
+     
+    console.log('Entrada: '+myWork1.getstartWork());// Entrada: 8:00
+    console.log('Saída: '+myWork1.getfinishWork()); // Saída: 19:00
+    console.log('Nome: '+myWork1.getOfficialName());// Nome: Luiz Celso F Alves
+     
+    myWork2.startWork = '10:00';
+    console.log('Novo horario de entrada: '+myWork2.startWork);// Novo horario de entrada: 10:00
+
+    ```
+
+    ---
+    # Escopo e Hoisting 
+
+    ## Como funcionam as declarações
+
+    Declarar variáveis é algo extremamente necessário. Sem isso nossos códigos seriam simplesmente complicados demais. No JavaScript, declaramos uma variável usando o termo  `var`  seguido do nome que ela levará. Ela será adicionada ao escopo atual.
+
+    O termo  `function`  também simboliza uma declaração de uma variável.  `function add(){}`  cria a variável  `add`  no escopo atual. Funções anônimas também podem ser declaradas ao omitirmos o nome (`function(){}`).
+
+    Porém, ao contrário do que você talvez imagine, todas as declarações são feitas quando seu código JavaScript começa a ser compilado. Só depois do que chamamos de  _Compile Time_, o script começa a ser executado (na fase que chamamos de  _Runtime_).
+
+       
+    ---
+    # Escopo e Hoisting 
+
+    ## Como funcionam as declarações 
+
+    O processo ocorre mais ou menos assim:
+
+    1.  Durante o  _Compile Time_, todo o código é analisado. Declarações são encontradas e todas as variáveis são criadas dentro de seus respectivos escopos.
+    2.  Após cada linha ser analisada, entramos em  _Runtime_. Seu código é, então, executado.
+
+    Sendo assim, mesmo que sua declaração esteja no meio do código, ela será “içada” (_hoisted_, em inglês) para o início do escopo em que ela está inserida. Neste momento, todas as variáveis declaradas com o termo  `var`  ganham o valor de  `undefined`  e as funções têm seu conteúdo compilado. É isso que chamamos de  _hoisting_. Apenas quando entramos em  _Runtime_  todas as linhas são executadas, incluindo as atribuições.      
+
+
+    ---
+    # Escopo e Hoisting  
+
+    Um pouco de código para entendermos melhor:
+
+    1.  A linha  `var name = 'hugo';`  é interpretada durante o  _Compile Time_.
+    2.  A variável  `name`  é criada no escopo em que está inserida.
+    3.  Supondo que não temos mais linhas no código, terminamos o  _Compile Time_.
+    4.  Em seguida voltamos à esta linha, que é executada durante o  _Runtime_.
+    5.  Uma referência a  `name`  é procurada dentro do escopo atual.
+    6.  Quando a referência é encontrada, o valor  `'hugo'`  é atribuído a ela.      
+    ---
+    # Escopo e Hoisting 
+
+    ## Entendendo melhor o primeiro exemplo
+
+    No primeiro exemplo, vimos que a saída no Console foi  `undefined`, mesmo tendo uma variável  `number`  já declarada antes da função ser executada.
+
+    ```javascript
+    var number = 10;
+    function init(){
+        console.log(number);
+        var number = 5;
+    }
+    init();
+
+    ```
+       
+    ---
+    # Escopo e Hoisting   
+
+    Isso aconteceu porque este script foi interpretado da seguinte forma:
+
+    #### _Compile Time_
+
+    1.  Começamos o  _Compile Time_  declarando a variável  `number`  da primeira linha no escopo global.
+    2.  Logo depois declaramos a função  `init`  e iniciamos a sua compilação.
+    3.  Dentro do escopo de  `init`  encontramos a declaração de  `number`  e adicionamos uma referência a ela dentro deste escopo.
+    4.  Nenhuma outra declaração é encontrada e não temos nenhum erro de sintaxe. O  _Compile Time_  é finalizado.
+
+    Neste momento o código está virtualmente assim:
+
+    ```javascript
+    // var number; (declarada no escopo global)
+    function init(){
+        // var number; (declarada no escopo de init)
+        console.log(number);
+        number = 5;
+    }
+
+    number = 10;
+    init();
+
+    ```
+
+    ---
+    # Escopo e Hoisting  
+
+    #### _Runtime_
+
+    1.  Entramos no modo de execução. Pulando as declarações, começamos com  `number = 10`.
+    2.  A variável  `number`  do escopo global é a que recebe o valor de  `10`
+    3.  Em seguida, a linha  `init()`  executa a função  `init`.
+    4.  Dentro de  `init`  rodamos o  `console.log(number)`.  `number`  se refere à  `number`  do escopo de  `init`. Por enquanto o valor deste  `number`  é  `undefined`.
+    5.  Na última linha da função  `init`, executamos  `number = 5`. A variável  `number`de dentro do escopo de  `init`  agora tem o valor de  `5`.
+
+    Esse comportamento de “içar” variáveis parece anormal, já que esperamos que a declaração e atribuição da variável aconteçam no mesmo momento e na linha em que ela se encontra. Porém, por causa da forma como o JavaScript é compilado e interpretado, estas duas ações acontecem em momentos diferentes.
+
+    ---
+    # Escopo e Hoisting  
+
+    Ter a fase de compilação do JavaScript é essencial para que o script seja validado corretamente pelo navegador ou outra plataforma que executará seu código. Além disso, quem executa o JavaScript pode preparar de antemão cache para escopos, variáveis e funções.
+
+    Entender pelo menos o básico de escopo e  _variable hoisting_  é essencial para escrevermos JavaScript de qualidade.      
+    ---
+    # Escopo e Hoisting  
+
+    ## Evitando problemas
+
+    Para evitar que você tenha problemas por causa do  _hoisting_, a melhor dica que posso te dar é: declare as variáveis no início do escopo, mesmo sem a inicialização.
+
+    ```javascript
+    function countUsers() {
+        var count, users;
+        users = app.users;
+        count = users.length;
+
+        return count;
+    }
+
+    ```
+
+    Para te ajudar a encontrar lugares onde o  _hoisting_  pode trazer problemas, é interessante usar um  _linter_  ou  _hinter_  no seu código. Essas ferramentas analisam o que você escreveu e te dão dicas para melhorar. Um dos mais conhecidos é o  [JSHint](http://www.jshint.com/).
+
+    ---
+    # Escopo e Hoisting
+
+    ## Outras formas de criar escopos
+
+    Além de funções, existem também outras formas de se criar um novo escopo no JavaScript:
+
+    -   Usando a função  `eval()`. Mas evite, pois  [Eval is Evil](http://stackoverflow.com/questions/86513/why-is-using-the-javascript-eval-function-a-bad-idea).
+    -   Dentro de  `catch`  em um  `try`.  [Saiba mais sobre  `try…catch`](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Statements/try...catch).
+    -   Dentro de um  `with`.  [Saiba mais sobre  `with`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/with). Evite este cara também.
+
+    Escopos não são criados dentro de todos os blocos, logo, variáveis declaradas dentro de  `if`,  `for`,  `switch`  ou outro bloco são criadas dentro do escopo em que estes blocos estão.
+
+    Porém, a partir do EcmaScript 6 (nova versão da especificação para implementação do JavaScript), o termo  `let`  nos deixará declarar variáveis que são criadas em escopos dentro destes blocos. Isso vai ser bem interessante, já que permitirá a criação de variáveis dentro de loops  `for`, por exemplo.  [Veja um pouco mais sobre como usar o  `let`](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Statements/let).          
+
+    ---
+    class: center, middle
+    # jQuery
+
+    ---
+    # Introdução ao jQuery 
+
+    Por conta das dificuldades enfrentadas pelos programadores JavaScript para páginas Web, foi criada uma biblioteca que traz diversas funcionalidades voltadas à solução dos problemas mais difíceis de serem contornados com o uso do JavaScript puro.
+
+    A principal vantagem na adoção de uma biblioteca de JavaScript é permitir uma maior compatibilidade de um mesmo código com diversos navegadores. Uma maneira de se atingir esse objetivo é criando funções que verificam quaisquer características necessárias e permitam que o programador escreva um código único para todos os navegadores.
+
+    Além dessa vantagem, o jQuery, que é hoje a biblioteca padrão na programação front-end para Web, traz uma sintaxe mais "fluida" nas tarefas mais comuns ao programador que são: selecionar um elemento do documento e alterar suas características.
+
+    ---
+    # Introdução ao jQuery
+
+    ## Principais funcionalidades do jQuery
+
+    - Resolução da incompatibilidade entre os navegadores.
+    - Redução de código.
+    - Reutilização do código através de plugins.
+    - Utilização de uma vasta quantidade de plugins criados por outros desenvolvedores.
+    - Trabalha com AJAX e DOM.
+    - Implementação segura de recursos do CSS1, CSS2 e CSS3.
     
     ---
     # Introdução ao jQuery
+
+    ## O que é jQuery?
+    jQuery é uma ***biblioteca***, ou um conjunto de incrementos úteis, para a linguagem de programação JavaScript. Pode parecer contra intuitivo aprender a usar uma biblioteca antes de aprender a linguagem de fato, mas há algumas boas razões para isso.
+
+    Demora um pouco até que se fique familiarizado e confortável com JavaScript, e é mais difícil manipular elementos HTML diretamente por JavaScript do que por jQuery. Para ajudá-lo a construir websites fantásticos mais rápido, vamos começar com jQuery.
+    jQuery oferece uma interface simples para o básico de JavaScript. Para muitos usuários é mais fácil aprender jQuery primeiro e então mergulhar nos detalhes profundos de JavaScript mais tarde.
+    jQuery é muito melhor no que diz respeito a dar resultados visuais imediatos do que JavaScript. No final desta lição, você terá construído seu próprio botão interativo!
+    
+
+    ---
+    # Introdução ao jQuery
+
+    ## Modelo de Objetos de Documentos
+
+    Um documento HTML é estruturado de acordo com o Modelo de Objetos de Documentos, ou DOM (do inglês Document Object Model). É por meio da interação com o DOM que a jQuery é capaz de acessar e modificar códigos HTML.
+
+    O DOM é composto por todos os elementos da página, organizados de forma hierárquica, refletindo a maneira como o documento HTML é ordenado
+    
+    ---
+    # Introdução ao jQuery
+
+    Assim como o div de CSS se refere ao elemento HTML < div >, o 'div' da jQuery se refere ao mesmo elemento HTML < div >. 
+
+    Você pode pensar no nome do elemento passado para a jQuery como sendo idêntico ao elemento CSS, ele apenas fica entre aspas. 
+    
+    ---
+    # Introdução ao jQuery
+
+    Então, por exemplo, você pode apontar qualquer coisa da classe 'button' com
+
+    ```javascript
+    $('.button').someAction
+    ```
+
+    Como você deve lembrar, .button no seu arquivo CSS é como você aponta qualquer coisa de class="button" no seu arquivo HTML.
+    
+    ---
+    # Introdução ao jQuery  
+
+    ## jQuery Selectors
+    
+    Um dos maiores poderes do jQuery está na sua capacidade de selecionar elementos a partir de seletores CSS.
+
+    Como já aprendemos, exitem diversas formas de selecionarmos quais elementos ganharão determinado estilo. Infelizmente muitos desses seletores não funcionam em todos os navegadores. Contudo, no jQuery, os temos todos à nossa disposição.
+
+    Por exemplo, se quisermos esconder todas as tags < td > filhas de um < tbody >, basta:
+
+    ```javascript
+    $('tbody td').hide();
+    ```
+
+    ---
+    # Introdução ao jQuery
+
+    Seletores mais comuns:
+
+    ```javascript
+    // pinta o fundo do formulario com id "form" de preto
+    $('#form').css('background', 'black');
+
+    // esconde todos os elementos com o atributo "class" igual a "headline"
+    $('.headline').hide();
+    
+
+    // muda o texto de todos os parágrafos
+    $('p').text('alô :D');
+    ```
+
+    Mais exemplos:
+
+    ```javascript
+    $('div > p:first'); // o primeiro elemento <p> imediatamente filho de um <div>
+
+    $('input:hidden'); // todos os inputs invisíveis
+
+    $('input:selected'); // todas as checkboxes selecionadas
+
+    $('input[type=button]'); // todos os inputs com type="button"
+
+    $('td, th'); // todas as tds e ths
+    ```
+
+    ---
+    # Introdução ao jQuery
+
+    Lembre-se de que a função que chamamos após o seletor é aplicada para todos os elementos retornados. Veja:
+
+    ```javascript
+    // forma ineficiente
+    alert($('div').text() + $('p').text() + $('ul li').text());
+
+    // forma eficiente :D
+    alert($('div, p, ul li').text());
+
+    ```
+    A função text() é chamada para todos os < div >s, < p >s, e < li >s filhos de < ul >s.
+
+    ---
+    # Introdução ao jQuery
+
+    ##  Filtros customizados e por DOM
+
+    Existem diversos seletores herdados do css que servem para selecionar elementos baseados no DOM. Alguns deles são:
+
+    ```javascript
+        $('div > p'); // <p>s imediatamente filhos de <div>
+        $('p + p'); // <p>s imediatamente precedidos por outro <p>
+        $('div:first-child'); // um elemento <div> que seja o primeiro filho
+        $('div:last-child'); // um elemento <div> que seja o último filho
+        $('div > *:first-child'); // um elemento que seja o primeiro filho direto de uma <div>
+        $('div > *:last-child'); // um elemento que seja o ultimo filho direto de uma <div>
+        $('div p:nth(0)'); // o primeiro elemento <p> filho de uma <div>
+        $('div:empty'); // <div>s vazios
+    ```
+
+
+    ---
+    # Introdução ao jQuery
+    ## Começando
+
+    A seguir, precisamos dar início à mágica da jQuery usando a sintaxe $(document).ready(); que você viu. Ela funciona assim:
+
+    ```javascript
+    $(document).ready(function(){
+
+    });
+    ```
+
+    - $() diz, "ei, a mágica da jQuery está prestes a acontecer!"
+    - Colocar o documento document entre parênteses nos diz que estamos prestes a realizar nossa mágica no próprio documento HTML.
+    - .ready(); é uma função, ou ação básica, em jQuery. Ela diz "ei, vou começar a fazer as coisas assim que o documento HTML estiver pronto!"
+    - Qualquer coisa dentro dos parênteses de .ready() é o evento jQuery que acontece assim que o documento HTML fica pronto.
+    
+    ---
+    # Introdução ao jQuery
+
+    Assim,
+
+    ```javascript
+    $(document).ready(something);
+
+    ```
+    diz: "quando o documento HTML estiver pronto, faça something!" (Vamos te mostrar como substituir o something por uma ação no próximo exercício.)
+
+    Perceba que .ready(); termina com um ponto-e-vírgula. Isso mostra para a jQuery que você terminou o comando.
+
+    
+    ---
+    # Introdução ao jQuery
+
+    ## Utilitário de iteração do jQuery
+
+    O jQuery traz também entre suas diversas funcionalidades, uma função que facilita a iteração em elementos de um Array com uma sintaxe mais agradável:
+
+    ```javascript
+    $("#menu-departamentos li").each(function (index, item) {
+        alert(item.text());
+    });
+    ```
+    
+    ---
+    # Introdução ao jQuery
+
+    A função each chamada logo após um seletor executa a função que passamos como argumento para cada um dos itens encontrados. Essa função precisa de dois argumentos. O primeiro será o "índice" do elemento atual na coleção (0 para o primeiro, 1 para o segundo e assim por diante), e o segundo será o próprio elemento.
+
+    Também é possível utilizar a função each do jQuery com qualquer Array:
+    
+    ```javascript
+
+    var pessoas = ["João", "José", "Maria", "Antônio"];
+
+    $.each(pessoas, function(index, item) {
+        alert(item);
+    })
+
+    ```
+    Nesse caso, chamamos a função each diretamente após o $, pois essa implementação é um método do próprio objeto $. Passamos dois argumentos, o primeiro é o Array que queremos percorrer e o segundo a função que desejamos executar para cada um dos itens do Array.
+    
+
+    ---
+    # Introdução ao jQuery
+
+
+    ```javascript
+    $('.novidades button').click(function() {
+        $('.novidades').removeClass('painel-compacto');
+    });
+    ```
+
+    Mais exemplos:
+
+    -   [Documentação da API do jQuery](http://jquery.com/api/)
+    -   [jQuery Selectors](https://www.tutorialrepublic.com/jquery-reference/jquery-selectors.php)
+    -   [Visual jQuery - Uma documentação categorizada e navegável da API do jQuery](http://visualjquery.com/)
+    -   [Expressões do jQuery: CSS](http://jquery.com/docs/Base/Expression/CSS/)
+    -   [Expressões do jQuery: XPath](http://jquery.com/docs/Base/Expression/XPath/)
+    -   [Expressões do jQuery: Customizadas](http://jquery.com/docs/Base/Expression/Custom/)
+    -   [Eventos especiais no jQuery](http://jquery.com/docs/EventModule/)
+    -   [jQuery DOM Traversing](http://jquery.com/docs/Base/Traverse/)
+
+
+    ---
+    class: center, middle
+    # AJAX        
 
     ---
     # AJAX    
 
     ---
+    class: center, middle
     # Orientação a Objetos em JavaScript
+
+    ---
+    # Orientação a Objetos em JavaScript
+
+    ---
+    class: center, middle
+    # Funções como objetos    
 
     ---
     # Funções como objetos
     
     ---
+    class: center, middle
+    # Funções de Alta Ordem     
+
+    ---
     # Funções de Alta Ordem 
+
+    ---
+    class: center, middle
+    #  API JS + HTML5
 
     ---
     #  API JS + HTML5
 
 
     ---
+    class: center, middle
+    # EcmaScript 6+
+
+    ---
     # EcmaScript 6+
 
 
     ---
-
+    class: center, middle
+    # Promises
+    ---
     # Promises
 
 
     ---
+    class: center, middle
+    # Transpiladores  
 
+    ---
+    class: center, middle
     # Transpiladores
     
     ---
     #Referências
 
     - https://developer.mozilla.org/pt-BR/docs/Learn/JavaScript/First_steps/O_que_e_JavaScript
+    - https://classroom.udacity.com/courses/ud245
     
   </textarea>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/remark/0.14.0/remark.min.js"></script>

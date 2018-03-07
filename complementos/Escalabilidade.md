@@ -1,10 +1,10 @@
-##Escalando Javascript no browser
+## Escalando Javascript no browser
 
 Aí você está lá, todo pomposo, trabalhando no seu projeto, escrevendo seu JS tudo em um arquivo só, achando que vai ficar com pouco código, usando uma global aqui, outra global ali, e quando vê… já está com 4.000 linhas de código, todo perdido sem saber o que fazer! E você pensa: “Porque eu não modularizei isso???”
 
 > Já dizia Renato Aragão: “Se não fosse comigo, eu ria…“
 
-###Modularizar é preciso
+### Modularizar é preciso
 
 Quando você começa a desenvolver um projeto que vai usar muito JS, mas você não sabe o quanto, você precisa estar preparado para escalar. Seu código precisa ser o menor possível, o mais modularizado e desacoplado possível, para que você possa crescer sem problemas.
 Mas como pensar nisso já no início do projeto, muitas vezes sem ter noção da quantidade de código que vou precisar escrever?
@@ -20,7 +20,7 @@ E, por mais estranho que possa soar, pensar simples é bastante complicado! É m
 
 Normalmente nós já queremos pensar no todo, no projeto inteiro, como iremos chegar ao final. Mas nunca chegaremos ao final, se não dermos o primeiro passo! Temos que subir um degrau de cada vez. Pensando de forma componentizada, você quebra tudo em pequenos pedaços separados, independentes, que vão se juntando aos poucos, até formar o projeto concretizado :D
 
-###Separação de responsabilidades
+### Separação de responsabilidades
 
 Se, desde o início do projeto, você já tiver na sua cabeça a definição das responsabilidades de cada parte do seu código, vai facilitar bastante para modularizá-lo.
 
@@ -33,7 +33,7 @@ Pradentro!”. Ele ficou confuso, e morreu.
 
 Como disse acima: precisamos pensar de dentro pra fora: quais seriam as menores partes do nosso código?
 
-###Estrutura de diretórios
+### Estrutura de diretórios
 
 
 Acho bastante interessante o formato como o AngularJS separa os conceitos, por isso acabei adotando algumas ideias. Basicamente, a estrutura de diretórios que utilizo é mais ou menos assim:
@@ -70,7 +70,7 @@ Mas isso depende de cada projeto. Essa estrutura é uma base para facilitar a mo
 
 E, se você quiser fazer um bundle, juntando tudo em um arquivo só, você pode concatenar todos os arquivos, exatamente nessa ordem :)
 
-###Conteúdo dos arquivos
+### Conteúdo dos arquivos
 
 O conteúdo dos arquivos também deve manter uma convenção, para que fique fácil adicionar novos arquivos e dar manutenção nos já existentes. A estrutura base dos arquivos provavelmente vai ser a mesma, mudando apenas alguns detalhes.
 

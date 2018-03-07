@@ -1,8 +1,8 @@
-##JavaScript Strict Mode
+## JavaScript Strict Mode
 
 O strict mode é uma nova feature do ECMAScript 5 que permite fazer que o código JavaScript rode em um modo mais rigoroso. Neste modo, a engine de JavaScript tem seu comportamento modificado, gerando erros que antes eram silenciados e, até mesmo, proibindo o uso de certas partes da linguagem que são tidas como problemáticas, nos forçando assim a escrever um código de melhor qualidade e ajudando a capturar bugs mais precocemente.
 
-###Habilitando
+### Habilitando
 
 A primeira forma de habilitar o modo strict é a nível de arquivo. Para isso, basta por a string "use strict"; ou 'use strict'; no começo de um arquivo JS para que todo o código deste arquivo seja executado no modo strict.
 
@@ -38,11 +38,11 @@ Hoje é muito comum concatenarmos arquivos para diminuir a quantidade de dados t
 
 A Amazon teve um problema ao concatenar um arquivo JS que tinha "use strict"; declarado de forma global no arquivo com outros arquivos JS que não eram strict compliant. Como o arquivo que continha a declaração de modo strict global era o primeiro da fila de concatenação, ele fez com que o código dos outros arquivos também rodassem no modo strict, disparando vários erros que normalmente seriam silenciados. Esse episódio gerou, inclusive, uma abertura de ticket no Bugzilla do Firefox — e com certeza alguns milhões foram pelo ralo.
 
-###O que muda?
+### O que muda?
 
 O strict mode trouxe várias mudanças na forma de como o JavaScript é executado. Mas vamos focar nas principais partes. 
 
-####Declaração implícita de variáveis globais
+####  Declaração implícita de variáveis globais
 
 Um dos erros mais comuns em JavaScript. Sem o strict mode, uma nova variável global é criada sempre que atribuimos um valor a uma variável não declarada. No modo strict, isto gera um erro.
 
@@ -52,7 +52,7 @@ Um dos erros mais comuns em JavaScript. Sem o strict mode, uma nova variável gl
 	  variavelNaoDeclarada = 'foo';
 	}());
 
-####Restrição de nomes
+####  Restrição de nomes
 
 O modo strict impõe uma série de restrições aos nomes de variáveis, funções e parâmetros. eval e arguments não mais podem ser usados como identificadores, muito menos tentar atribuir um valor a eles. O que é muito bom, uma vez que o JavaScript possui nativamente uma função eval e um objeto arguments.
 
@@ -74,7 +74,7 @@ Algumas palavras também são proibidas de serem usadas como identificadores poi
 - static
 - yield
 
-###Uso do this
+### Uso do this
 
 O uso do this foi levemente modificado. Quando usado dentro de uma função, o this aponta para o objeto que contem a função. Porém quando a função não pertence a um objeto específico, ele aponta para o objeto global window.
 
@@ -119,7 +119,7 @@ Com o nome de parâmetros temos um cenário parecido. Normalmente o JavaScript a
 	  return param1 + 1;
 	}
 
-####Variáveis do contexto eval()
+####  Variáveis do contexto eval()
 
 O eval, em código não strict, pode adicionar variáveis ao contexto em que ele está inserido. E antes do JSON ser nativamente implementado nos browsers, o eval era muito usado para construir objetos a partir de strings e os inserir no contexto externo ao eval.
 
@@ -130,7 +130,7 @@ Com o strict mode, o eval não pode mais adicionar variáveis fora de seu contex
 	eval('var foo="bar";');
 	alert(foo); // gera um erro de sintaxe no "strict mode"
 
-####Números no sistema octal
+####  Números no sistema octal
 
 Números no sistema octal são números representados na base 8. Ou seja, 10 em octal equivale a 8 em decimal. Em JavaScript, e em várias outras linguagens, os números no sistema octal são representados com um 0 na frente do número. 023 em JavaScript equivale a 19 em decimal. Isso gerava muita confusão, já que muitos achavam que um zero a esquerda não iria fazer nenhuma diferença na representação do número.
 
@@ -151,7 +151,7 @@ No modo strict o uso de números no sistema octal não é permitido. Caso um 0 s
 
 Como o número 08 não é um número octal válido, já que números no sistema octal vão de 0 a 7, ele é tratado como um número decimal. No caso do número 023, por ser um octal válido, um erro de sintaxe é gerado. Caso você não saiba o que um octal é, ande pela sombra evitando o uso de 0‘s na frente de números.
 
-###Suporte
+### Suporte
 
 O strict mode pode ser usado sem medo em todos os navegadores. Caso um navegador que não o implemente passe pela declaração "use strict";, ele irá tratá-la como uma string e não irá afetar o comportamento do código seguinte.
 

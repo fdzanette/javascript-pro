@@ -1,10 +1,11 @@
-##IIFE
+
+## IIFE
 
 Pra quem não conhece, a IIFE ou Imediately Invoked Function Expression (Expressão de Função Invocada Imediatamente), faz exatamente isso: no momento em que ela é interpretada, ela é imediatamente invocada, para que o seu conteúdo seja executado!
 
 E porque é tão importante usar IIFE?
 
-###Formato da IIFE
+### Formato da IIFE
 Antes de qualquer coisa, vou mostrar como se utiliza uma IIFE. Para uma função simples, você pode invocá-la da seguinte maneira:
 
     function sayHi() {
@@ -26,14 +27,14 @@ Essa é uma IIFE! É uma função anônima, logo, ela não poderia ser invocada,
 
 Mas porque eu usaria uma IIFE? E o ponto-e-vírgula no ínicio? E aqueles parâmetros? E porque o undefined como parâmetro?
 
-###Porque usar IIFE
+### Porque usar IIFE
 
 Escopo. O Javascript tem um problema bastante grave, que é a questão do escopo. Tudo o que você declara fora de uma função, faz parte do escopo global. Algumas linguagens colocam escopo a partir de blocos (if, while, for, etc). Mas em Javascript, se você declarar uma variável dentro de um if, você ainda será capaz de consultar o seu valor, pois o escopo é definido por um bloco de função.
 
 Então, o motivo de usar uma IIFE é para que o seu código não fique sujando o escopo global, e evitar que suas variáveis possam colidir com outras de mesmo nome, que estão no mesmo escopo.
 Criando uma função, a função ou variável criada ali dentro (utilizando o var), fará parte do escopo local, e não poderá ser acessada de fora, a não ser que, explicitamente, você a exporte.
 
-###Ponto-e-vírgula no início da IIFE
+### Ponto-e-vírgula no início da IIFE
 
 O ponto-e-vírgula no início da IIFE é usado como segurança. Como você deve saber, você precisa colocar um ponto-e-vírgula sempre ao final de cada expressão. Mas ele não é obrigatório.
 Então, imagine você concatenando todos os seus scripts, junto com as libs de terceiros que você usa. E imagine que uma lib qualquer tem, na última linha do seu código, a seguinte expressão:
@@ -54,7 +55,7 @@ Entende a “gravidez”(:P) do problema? Agora, e se você colocar o ponto-e-vi
 	
 Aí sim, tudo irá funcionar como o esperado! :D
 
-###Parâmetros
+### Parâmetros
 
 Como qualquer função normal, você pode, ao invocar a IIFE, passar parâmetros para ela. O motivo de passar parâmetros é também escopo. Você pode passar um parâmetro que está no escopo global, para que ele seja usado como uma variável local. Um exemplo bastante comum é o jQuery:
 
@@ -64,7 +65,7 @@ Como qualquer função normal, você pode, ao invocar a IIFE, passar parâmetros
 
 Assim você injeta como parâmetro o objeto global jQuery, e recebe na IIFE como $, localmente, que agora pode ser usado sem medo de conflitar com qualquer outra lib que utilizar $. xD
 
-###O undefined na IIFE
+### O undefined na IIFE
 
 Muitas pessoas não sabem, mas o undefined não é um operador, como o new ou o void, mas sim uma variável global, que tem valor indefinido (undefined).
 Por esse motivo, no EcmaScript 3, era permitido mudar o valor de undefined.

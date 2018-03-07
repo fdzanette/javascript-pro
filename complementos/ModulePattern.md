@@ -1,7 +1,7 @@
 
 Module Pattern é muito utilizado por vários devs JS hoje em dia, e ele tem muitas variações. Em busca de um formato que facilitasse meu dia-a-dia, testei alguns, até que cheguei em um que me agradou.
 
-###Premissas
+### Premissas
 
 O que me levou a seguir esse padrão foi, principalmente, poder separar minhas regras de negócio da manipulação do DOM em sim (isso falando de JS no client-side).
 
@@ -11,7 +11,7 @@ Você vai ver como fica fácil fazer testes unitários (TDD) e testes de comport
 
 Vou mostrar passo-a-passo o que me levou a tomar todas as decisões para chegar nesse resultado final.
 
-###Estrutura de arquivos e diretórios
+### Estrutura de arquivos e diretórios
 
 Os arquivos e diretórios ficarão organizados dessa forma:
 
@@ -33,11 +33,11 @@ Em modules, os módulos do projeto, criados para automatizar tarefas repetitivas
 
 Em vendor, as libs usadas no projeto: jQuery, Underscore, etc., ou qualquer lib de terceiros, que você não vai alterar diretamente.
 
-###Nomenclatura dos arquivos
+### Nomenclatura dos arquivos
 
 Controllers começam com controller-alguma-coisa.js e models com model-alguma-coisa.js. Os arquivos serão criados conforme as necessidades do projeto: separados por funcionalidade ou por partes específicas do projeto.
 
-####O código
+#### O código
 
 Escopo Local
 
@@ -66,7 +66,7 @@ O próximo passo é criar nosso objeto principal, dentro dessa função anônima
 
 Atribuiremos a app uma função autoexecutável para não precisarmos adicionar os parênteses quando chamarmos algum método interno. O "use strict" habilita o Strict Mode para ECMAScript 5. 
 
-###Separando métodos privados e públicos
+### Separando métodos privados e públicos
 
 Esse foi o ponto principal que mudou da minha antiga abordagem do Module Pattern. É sempre uma boa prática usar DRY para manter as coisas organizadas.
 
@@ -123,7 +123,7 @@ Uma forma que encontrei de contornar isso foi assim:
 	})( window, document );
 	
 
-####Ordem das chamadas
+#### Ordem das chamadas
 
 Para manter um padrão de organização, iremos fazer dessa forma: primeiro as propriedades, e depois os métodos. E os privados sempre antes dos públicos, ordenando tudo alfabeticamente. Nossa abordagem ficará dessa forma:
 

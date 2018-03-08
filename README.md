@@ -7,54 +7,39 @@
 # Curso de Javascript Pro
 
 
-1. Introdução ao JavaScript
 
-2. Tratamento de erros em Javascript
-
-3. Ajax
-
-– Criação de HTTP requests usando os métodos nativos em JS
-
-– Manipulação de códigos de erro das requisições
-
+**1\. Ajax**  
+– Criação de HTTP requests usando os métodos nativos em JS  
+– Manipulação de códigos de erro das requisições  
 – Requisições Cross Domain usando CORS / XHRCS
 
-4. Prototipagem em Javascript 
-5. 
-– Como trabalhar com algo próximo a Orientação a Objeto em JS
+**2\. Prototipagem em Javascript**  
+– Como trabalhar com algo próximo a Orientação a Objeto em JS?
 
-
-6. API JS + HTML5
-
-– Exemplos práticos
-– Manipular orientação do device
-– Webworkers (JS em segundo plano)
-– Bateria
-– Geolocation
-– Notificações
-– Online/Offline
-– Câmera / Microfone
-– Exemplos Canvas
+**3\. API JS + HTML5**  
+– Exemplos práticos  
+– Manipular orientação do device  
+– Webworkers (JS em segundo plano)  
+– Bateria  
+– Geolocation  
+– Notificações  
+– Online/Offline  
+– Câmera / Microfone  
+– Exemplos Canvas  
 – Ex. de games que são feitos em JS utilizando estes recursos
 
+**4\. Introdução ao jQuery**
 
-7. Introdução ao jQuery
-
-8. EcmaScript 6+
-
-– Arrow functions
-
-– Async/await
-
-– Destructuring
-
-– Classes
-
+**5\. EcmaScript 6+**  
+– Arrow functions  
+– Async/await  
+– Destructuring  
+– Classes  
 – Herança
 
-9. Promises
+**6\. Promises**
 
-10. Transpiladores
+**7\. Transpiladores**
 
 ### Slides
 

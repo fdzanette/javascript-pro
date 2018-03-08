@@ -1055,8 +1055,205 @@
     # AJAX        
 
     ---
-    # AJAX    
+    # AJAX   
+    ## XMLHttpRequest aka AJAX
 
+    [`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/DOM/XMLHttpRequest "XMLHttpRequest")  torna o envio de requisições HTTP muito fácil. Basta criar uma instância do objeto, abrir uma url e enviar uma requisição. O [status](https://developer.mozilla.org/en-US/docs/HTTP/HTTP_response_codes "HTTP response codes") [HTTP](https://developer.mozilla.org/en-US/docs/HTTP/HTTP_response_codes "HTTP response codes") do resultado assim como o seu conteúdo estarão disponíveis quando a transação for completada. Esta página descreve alguns casos comuns de uso desse poderoso objeto JavaScript.
+
+    ```js
+    function reqListener () {
+      console.log(this.responseText);
+    };
+
+    var oReq = new XMLHttpRequest();
+    oReq.onload = reqListener;
+    oReq.open("get", "yourFile.txt", true);
+    oReq.send();
+    ``` 
+    ---
+    # AJAX   
+
+    ## Tipos de Requisições
+
+    Uma requisição feita via XMLHttpRequest pode buscar dados de duas maneiras, sícrona e assíncrona. O tipo de requisição é dado pelo argumento  `async`  que é opcional (terceiro argumento) e é definido no método XMLHttpRequest [open()](https://developer.mozilla.org/en-US/docs/DOM/XMLHttpRequest#open() "DOM/XMLHttpRequest#open()"). Se esse argumento for  `true`ou não especificado, o  `XMLHttpRequest`  será processado de maneira assíncrona, caso contrário o processamento será síncrono. Uma discussão detalhada e demonstrações desses dois tipos podem ser encontradas na página [requisições síncronas e assíncronas](https://developer.mozilla.org/en-US/docs/DOM/XMLHttpRequest/Synchronous_and_Asynchronous_Requests "Synchronous and Asynchronous Requests"). No geral a melhor prática é a das solicitações assíncronas.
+    ---
+    # AJAX 
+
+    ## Manipulando Respostas
+
+    Existem vários tipos de  [atributos de resposta](http://www.w3.org/TR/XMLHttpRequest2/#response "http://www.w3.org/TR/XMLHttpRequest2/#response") definidos pela especificação da W3C para o XMLHttpRequest. Eles informam ao cliente que efetuou a requisição XMLHttpRequest informações importantes sobre o status da resposta. Em alguns casos onde se lida com tipos de resposa de não-texto, os tipos de resposta podem envolver alguma manipulação e/ou análise conforme descrito nas seções seguintes.
+
+    ---
+    # AJAX 
+
+    ### Analisando e manipulando a propriedade  `responseXML`
+
+    Se você utiliza o  `XMLHttpRequest` para obter o conteúdo de um documento XML remoto, a propriedade  `responseXML`  será um objeto DOM que contém um documento XML, o que pode dificultar a manipulação e análise.
+
+    As cinco formas mais utilizadas para análisar e manipular um arquivo XML são:
+
+    1.  Usando  [XPath](https://developer.mozilla.org/en-US/docs/XPath "XPath")  para análisar parte deles.
+    2.  Usando  [JXON](https://developer.mozilla.org/en-US/docs/JXON "JXON")  para converter em um Objeto JavaScript.
+    3.  Manualmente  [Parsing and serializing XML](https://developer.mozilla.org/en-US/docs/Parsing_and_serializing_XML "Parsing_and_serializing_XML")  para strings ou objetos.
+    4.  Usando  [XMLSerializer](https://developer.mozilla.org/en-US/docs/XMLSerializer "XMLSerializer")  para serializar  **árvores do DOM para strings ou para arquivos**.
+    5.  [RegExp](https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/RegExp "https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/regexp") pode ser usado se você souber de antemão qual é o conteúdo do XML. Você pode remover quebras de linhas, usando a RegExp para procurar as quebras de linha. No entanto, este é o "último método", caso o código do XML sofra alterações, o método se torna falho.     
+    ---
+    # AJAX
+
+    ### Analisando e manipulando uma propriedade  `responseText`  contendo um documento HTML
+
+    Se você usa o  `XMLHttpRequest`  para recuperar o conteúdo de uma página HTML remota, a propriedade  `responseText`  será uma string contendo um a "sopa" de todos as tags HTML, o que pode ser difícil de manipular e analizar. Existem três formas básicas para analizar esta sopa de string HTML:
+
+    1.  Use a propriedade `XMLHttpRequest.responseXML`.
+    2.  Introduza o conteúdo dentro do corpo de um  [document fragment](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment)  Através de  `fragment.body.innerHTML`  e percorra o fragmento do DOM.
+    3.  [RegExp](https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/RegExp "https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/regexp") pode se usada se você sempre conhece o conteúdo HTML  `responseText` de que tem em mãos. Você pode quere remover quebras de linha, se você usar RegExp para varrer no que diz respeito a quebra de linhas. Contudo, este método é um "último recurso" uma vez que se o código HTML mudar um pouco, o método provavelmente irá falhar.
+
+    ---
+    # AJAX
+
+    ```js
+    function xhrSuccess() { 
+        this.callback.apply(this, this.arguments); 
+    }
+
+    function xhrError() { 
+        console.error(this.statusText); 
+    }
+
+    function loadFile(url, callback /*, opt_arg1, opt_arg2, ... */) {
+        var xhr = new XMLHttpRequest();
+        xhr.callback = callback;
+        xhr.arguments = Array.prototype.slice.call(arguments, 2);
+        xhr.onload = xhrSuccess;
+        xhr.onerror = xhrError;
+        xhr.open("GET", url, true); // `false` makes the request synchronous
+        xhr.send(null);
+    }
+    ``` 
+
+    Usando:
+
+    ```js
+    function showMessage(message) {
+        console.log(message + this.responseText);
+    }
+
+    loadFile("message.txt", showMessage, "New message!\n\n");
+    ```
+
+
+    ---
+    # AJAX 
+
+    Devido à política de mesma origem, linguagens client-side, como o JavaScript só podem fazer chamadas para o mesmo domínio.
+    Se fizer uma chamada AJAX para outro domínio, ou então para seu próprio domínio, mas com uma porta diferente, HTTPS ou para um subdomínio, a chamada Ajax vai falhar.
+
+    JSONP ou "JSON with padding" é um complemento ao formato de dados JSON. Ele provê um método para enviar requisições de dados de um servidor para um domínio diferente, uma coisa proibida pelos navegadores típicos.
+
+    ---
+    # AJAX 
+    ## Controle de Acesso HTTP (CORS)
+
+    Compartilhamento de recursos de origens cruzadas é um mecanismo que usa cabeçalhos HTTP adicionais para garantir permissão de acesso a recursos de um servidor diferente do da origem da página (domínio) correntemente em uso. Um user agent realiza um requisição HTTP de origem cruzada quando executa uma requisição de um domínio, protocolo ou porta diferente do qual originou o documento corrente.
+
+    Um exemplo de requisição de origem cruzada: Uma pagina HTML acessada através de http://domain-a.com faz requisição de uma imagem [<img> src](https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element/img#Atributos) para http://domain-b.com/image.jpg. Muita páginas na web, hoje em dia, utilizam recursos como CSS stylesheets, imagens e scripts de um domínio diferente do que originou a página corrente, como redes de entrega de conteúdo (CSN).
+
+    ---
+    # AJAX 
+    ## Controle de Acesso HTTP (CORS)
+
+    Por razões de segurança, os navegadores restringem solicitações HTTP de origem cruzada iniciadas a partir de scripts. Por exemplo, [`XMLHttpRequest`](https://developer.mozilla.org/pt-BR/docs/Web/API/XMLHttpRequest "XMLHttpRequest é uma API que fornece funcionalidade ao cliente para transferir dados entre um cliente e um servidor. Ele fornece uma maneira fácil de recuperar dados de um URL sem ter que fazer uma atualização de página inteira. Isso permite que uma página da Web atualize apenas uma parte do conteúdo sem interromper o que o usuário esteja fazendo. XMLHttpRequest é usado constantemente na programação de AJAX.")  e  [Fetch](https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API)  seguem a  [política de mesma origem](https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy). Assim, um aplicativo da web usando [`XMLHttpRequest`](https://developer.mozilla.org/pt-BR/docs/Web/API/XMLHttpRequest "XMLHttpRequest é uma API que fornece funcionalidade ao cliente para transferir dados entre um cliente e um servidor. Ele fornece uma maneira fácil de recuperar dados de um URL sem ter que fazer uma atualização de página inteira. Isso permite que uma página da Web atualize apenas uma parte do conteúdo sem interromper o que o usuário esteja fazendo. XMLHttpRequest é usado constantemente na programação de AJAX.")  ou  [Fetch](https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API)  só poderá fazer solicitações HTTP para seu próprio domínio. Para melhorar os aplicativos da Web, os desenvolvedores solicitaram que os fornecedores de navegador permitissem solicitações entre domínios.
+
+    <div style="width: 100%;background: #ffff; max-width: 100%;padding: 10px;text-align: center;">
+        <img src="https://mdn.mozillademos.org/files/14295/CORS_principle.png" style="max-height: 265px;" />
+    </div>
+
+    ---
+    # AJAX 
+
+    O mecânismo de Compartilhamento de Recursos entre Origens ([CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS)) fornece aos servidores de web controles de acesso entre domínios, que permitem transferências seguras de dados entre domínios. Os navegadores modernos usam o CORS em um container API - como [`XMLHttpRequest`](https://developer.mozilla.org/pt-BR/docs/Web/API/XMLHttpRequest "XMLHttpRequest é uma API que fornece funcionalidade ao cliente para transferir dados entre um cliente e um servidor. Ele fornece uma maneira fácil de recuperar dados de um URL sem ter que fazer uma atualização de página inteira. Isso permite que uma página da Web atualize apenas uma parte do conteúdo sem interromper o que o usuário esteja fazendo. XMLHttpRequest é usado constantemente na programação de AJAX.")  ou  [Fetch](https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API) \- Para mitigar os riscos de pedidos HTTP de origem cruzada.
+
+    Esse  [padrão de compartilhamento de origem cruzada](https://fetch.spec.whatwg.org/#http-cors-protocol)  é usado para habilitar solicitações de HTTP entre sites para:
+
+    -   Invocações do  [`XMLHttpRequest`](https://developer.mozilla.org/pt-BR/docs/Web/API/XMLHttpRequest "XMLHttpRequest é uma API que fornece funcionalidade ao cliente para transferir dados entre um cliente e um servidor. Ele fornece uma maneira fácil de recuperar dados de um URL sem ter que fazer uma atualização de página inteira. Isso permite que uma página da Web atualize apenas uma parte do conteúdo sem interromper o que o usuário esteja fazendo. XMLHttpRequest é usado constantemente na programação de AJAX.")  ou API [Fetch](https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API) em modo cross-site, tal como discutido acima.
+    -   Web Fonts (para o uso de fontes através de cross-domain no  `@font`  do CSS),  [para que os servidores possam implantar fontes TrueType que só podem ser carregadas em vários sites e usadas por sites da Web autorizados a fazê-lo](https://www.w3.org/TR/css-fonts-3/#font-fetching-requirements).
+    -   [Texturas WebGL](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Using_textures_in_WebGL).
+    -   Frames de Imagens/video desenhados para um canvas usando  [drawImage](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage).
+    -   Folhas de estilo (para acesso  [CSSOM](https://developer.mozilla.org/pt-BR/docs/MDN/Doc_status/API/CSSOM)).
+    -   Scripts (para exceções desativadas).
+
+    ---
+    # AJAX 
+
+    ## Exemplos de cenários de controle de acesso
+
+    Aqui, apresentamos três cenários que ilustram como o Compartilhamento de Recursos entre Origens funciona. Todos estes exemplos usam o objeto  [`XMLHttpRequest`](https://developer.mozilla.org/pt-BR/docs/Web/API/XMLHttpRequest "XMLHttpRequest é uma API que fornece funcionalidade ao cliente para transferir dados entre um cliente e um servidor. Ele fornece uma maneira fácil de recuperar dados de um URL sem ter que fazer uma atualização de página inteira. Isso permite que uma página da Web atualize apenas uma parte do conteúdo sem interromper o que o usuário esteja fazendo. XMLHttpRequest é usado constantemente na programação de AJAX."), que pode ser utilizado para fazer requisições entre origens em qualquer navegador compatível.
+
+    Os snippets JavaScript inclusos nessas seções (e instâncias executáveis do código no servidor que tratam corretamente essas requisições entre origens)  [podem ser encontradas "em ação" aqui](http://arunranga.com/examples/access-control/), e irão funcionar em navegadores que suportam [`XMLHttpRequest`](https://developer.mozilla.org/pt-BR/docs/Web/API/XMLHttpRequest "XMLHttpRequest é uma API que fornece funcionalidade ao cliente para transferir dados entre um cliente e um servidor. Ele fornece uma maneira fácil de recuperar dados de um URL sem ter que fazer uma atualização de página inteira. Isso permite que uma página da Web atualize apenas uma parte do conteúdo sem interromper o que o usuário esteja fazendo. XMLHttpRequest é usado constantemente na programação de AJAX.")  entre origens. Uma discussão sobre Compartilhamento de Recursos entre Origens a partir da  [perspectiva do servidor (incluindo snippets de código PHP) podem ser encontradas aqui](https://developer.mozilla.org/en-US/docs/Web/HTTP/Server-Side_Access_Control).
+
+    ---
+    # AJAX 
+
+    ### Requisições simples
+
+    Algumas requisições não desencadeiam um  [pré-envio CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS#Preflighted_requests). Essas são denominadas “requisições simples” neste artigo, embora a especificação  [Fetch](https://fetch.spec.whatwg.org/ "The 'Fetch' specification") (que define CORS) não utilize este termo. Uma requisição que não desencadeia um [pré-envio CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS#Preflighted_requests)—denominada “requisição simples”—é uma que atende todas as seguintes condições:
+
+    -   Os únicos métodos permitidos são:
+        -   [`GET`](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Methods/GET "A tabela de compatibilidade nesta página é gerada a partir de dados estruturados. Se você quiser contribuir com os dados, consulte https://github.com/mdn/browser-compat-data e envie-nos uma solicitação pull.")
+        -   [`HEAD`](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Methods/HEAD "The documentation about this has not yet been written; please consider contributing!")
+        -   [`POST`](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Methods/POST "The documentation about this has not yet been written; please consider contributing!")
+    ---
+    # AJAX 
+    
+    ### Requisições simples
+
+    -   Fora os cabeçalhos definidos automaticamente pelo user agent (por exemplo,  [`Connection`](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/Connection "The documentation about this has not yet been written; please consider contributing!"),  [`User-Agent`](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/User-Agent "O cabeçalho de requisição User-Agent contém uma string característica que permite o protocolo de rede do cliente identificar o tipo de aplicação, sistema operacional, fornecedor do software ou versão do software do agente de usuário do software solicitante."), ou [qualquer um dos outros cabeçalhos com nomes definidos na especificação Fetch como um “nome de cabeçalho proibido”](https://fetch.spec.whatwg.org/#forbidden-header-name)), os únicos cabeçalhos que são permitidos a serem manualmente definidos são [aqueles cujo a especificação Fetch define como sendo um “CORS-safelisted request-header”](https://fetch.spec.whatwg.org/#cors-safelisted-request-header), que são:
+        -   [`Accept`](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/Accept "The documentation about this has not yet been written; please consider contributing!")
+        -   [`Accept-Language`](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/Accept-Language "The documentation about this has not yet been written; please consider contributing!")
+        -   [`Content-Language`](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/Content-Language "The documentation about this has not yet been written; please consider contributing!")
+        -   [`Content-Type`](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/Content-Type "Em uma requisição POST, resultado de uma submissão de um formulário HTML, o Content-Type da requisição é especificado pelo atributo enctype do elemento <form> do HTML.")  (mas observe os requisitos adicionais abaixo)
+        -   `[DPR](http://httpwg.org/http-extensions/client-hints.html#dpr)`
+        -   `[Downlink](http://httpwg.org/http-extensions/client-hints.html#downlink)`
+        -   `[Save-Data](http://httpwg.org/http-extensions/client-hints.html#save-data)`
+        -   `[Viewport-Width](http://httpwg.org/http-extensions/client-hints.html#viewport-width)`
+        -   `[Width](http://httpwg.org/http-extensions/client-hints.html#width)`
+    ---
+    # AJAX 
+    
+    ### Requisições simples
+
+    -   Os únicos valores permitidos para o cabeçalho [`Content-Type`](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/Content-Type "Em uma requisição POST, resultado de uma submissão de um formulário HTML, o Content-Type da requisição é especificado pelo atributo enctype do elemento <form> do HTML.") são:
+        -   `application/x-www-form-urlencoded`
+        -   `multipart/form-data`
+        -   `text/plain`
+
+
+    ---
+    # AJAX
+
+    Por exemplo, suponha que o conteúdo web no domínio `http://foo.example`  deseje invocar um outro conteúdo no domínio `http://bar.other`. Códigos como este podem ser usados com o Javascript hospedado em foo.example:
+
+    ```js
+    var invocation = new XMLHttpRequest();
+    var url = 'http://bar.other/resources/public-data/';
+       
+    function callOtherDomain() {
+      if(invocation) {    
+        invocation.open('GET', url, true);
+        invocation.onreadystatechange = handler;
+        invocation.send(); 
+      }
+    }
+    ```
+    ---
+    # AJAX
+
+    Isso fará uma simples troca entre o cliente e o servidor, utilizando cabeçalhos CORS para o tratamento de privilégios.
+
+    <div style="width: 100%;background: #ffff; max-width: 100%;padding: 10px;text-align: center;">
+        <img src="https://mdn.mozillademos.org/files/14293/simple_req.png" style="max-height: 265px;" />
+    </div>
+       
     ---
     class: center, middle
     # Orientação a Objetos em JavaScript
@@ -1085,22 +1282,6 @@
     ---
     #  API JS + HTML5
 
-
-    ---
-    class: center, middle
-    # EcmaScript 6+
-
-    ---
-    # EcmaScript 6+
-
-
-    ---
-    class: center, middle
-    # Promises
-    ---
-    # Promises
-
-
     ---
     class: center, middle
     # Transpiladores  
@@ -1108,6 +1289,7 @@
     ---
     class: center, middle
     # Transpiladores
+    
     
     ---
     #Referências

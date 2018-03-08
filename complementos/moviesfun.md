@@ -1,5 +1,5 @@
 ## Documentação
-http://docs.themoviedb.apiary.io/#reference/movies/movieid/get
+https://developers.themoviedb.org/3
 
 ## API
 http://api.themoviedb.org/3/

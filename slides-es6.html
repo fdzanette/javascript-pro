@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ECMAScript 6</title>
+  <title>Javascript Pro - ECMAScript 6</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <style type="text/css">
    @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,600,800,900');
@@ -20,6 +20,20 @@
     }
     .remark-slide-number{color: #fff;font-size: 1rem;font-weight: bold;}
 
+    .remark-slide-content h1 {
+        font-size: 2.2rem;
+    }
+
+    .remark-slide-content h2 {
+        font-size: 1.9rem;
+    }
+    .remark-slide-content h3 {
+        font-size: 1.4rem;
+    }
+    a, a:link, a:visited, a:hover, a:active{
+        color: #007FFF;
+    }
+
   </style>
 </head>
 <body>
@@ -37,12 +51,28 @@
     ---
     # O que é ECMAScript?
     
-    Bem, o ECMAScript 6 (ES6, muitas vezes referido como Harmony) é o sexto grande release da especificação da linguagem ECMAScript. ECMAScript é o nome apropriado para a linguagem que conhecemos por JavaScript.
+    Bem, o ECMAScript 6 (ES6, ECMAScript 6 ou ES2015, muitas vezes referido como Harmony) é o sexto grande release da especificação da linguagem ECMAScript. ECMAScript é o nome apropriado para a linguagem que conhecemos por JavaScript.
+
+    Na verdade, o nome mais usado atualmente é ES2015. A ideia do comitê responsável (conhecido como TC39) pelas atualizações da linguagem é justamente fazer um release anual. Então nesse ano teremos o ES2018 (ou ES9). E assim sucessivamente.
+
  
     ---
-    # Considerações antes de optar por ES6
+    # ECMAScript x JavaScript x ES
+    
+    Uma dúvida bem comum é o porquê dessa mudança do nome. 
+    
+    Na verdade não houve nenhuma mudança: JavaScript é como nós chamamos a linguagem, só que esse nome é um trademark da Oracle (que veio após a compra da Sun). O nome oficial da linguagem é ECMAScript. E ES é simplesmente uma abreviação do mesmo.
 
-    Antes de você decidir usar ES6 em sua aplicação - em produção, e sem ser apenas para fins de estudo -, há dois questionamentos-chave que penso eu serem importantes:
+
+    ---
+    # Objetivos do ES6
+    O TC39 focou em alguns objetivos no desenvolvimento do ES6:
+
+    - Ser uma linguagem melhor para construir aplicações complexas
+    - Resolver problemas antigos do JavaScript
+    - Facilidade no desenvolvimento de libraries
+
+    Esses objetivos ficarão mais claros quando olharmos na prática as features do ES6.
 
     ---
     # ECMAScript 6 
@@ -106,7 +136,7 @@
 
     O ES6 Shim tem um suporte a navegadores razoavelmente grande - algumas features estão disponíveis até para anteriores ao IE8! A maneira mais simples para começar no navegador é apenas incluir uma tag de script em sua página referenciando para o caminho onde está o arquivo principal do shim - que pode ser encontrado no repositório oficial:
 
-        <script src="/es6-shim.js"></script>
+        < script src="/es6-shim.js"></script >
 
     Se você usa o Bower como gerenciador de pacotes, também pode ser uma boa opção: bower install es6-shim.
 
@@ -121,634 +151,1504 @@
     Porém, é válido lembrar que há uma série de outras opções de [transpilers](https://github.com/addyosmani/es6-tools#transpilers). Inclusive, o [Babel](https://github.com/babel/babel) (ou 6to5), possui boas vantagens frente ao Traceur
 
     ---
-
-
-    # ECMAScript 6
-    ###es6
-
-    ECMAScript 6 é a próxima versão do padrão ECMAScript. A norma deverá ser ratificada em Dezembro de 2014. ES6 é um upgrade significativo na linguagem, e a primeira atualização desde que foi padronizada em 2009. A Veja a implementação dessas funcionalidades noas principais engines de javascript no link [Tabela de Compatibilidade do ECMAScript 6](http://kangax.github.io/es5-compat-table/es6/).
-
-    Veja o [proposta de padrão ES6] (https://people.mozilla.org/ ~ jorendorff/es6-draft.html) para a especificação completa da linguagem ECMAScript 6.
-
-
-    ---
     # Funcionalidades
     ES inclui as seguintes novas funcionalidades:
-    - [arrows](#arrows)
-    - [classes](#classes)
-    - [enhanced object literals](#enhanced-object-literals)
-    - [template strings](#template-strings)
-    - [destructuring](#destructuring)
-    - [default + rest + spread](#default--rest--spread)
-    - [let + const](#let--const)
-    - [iterators + for..of](#iterators--forof)
-    - [generators](#generators)
-    - [comprehensions](#comprehensions)
-    - [unicode](#unicode)
-    - [modules](#modules)
-    - [module loaders](#module-loaders)
-    - [map + set + weakmap + weakset](#map--set--weakmap--weakset)
+    - arrows
+    - classes
+    - enhanced object literals
+    - template strings
+    - destructuring
+    - default + rest + spread
+    - let + const
+    - iterators + for..of
+    - generators
+    - comprehensions
+    - unicode
+    - modules
+    - module loaders
+    - map + set + weakmap + weakset
    
 
     ---
 
     # Funcionalidades
-    - [map + set + weakmap + weakset](#map--set--weakmap--weakset)
-    - [proxies](#proxies)
-    - [symbols](#symbols)
-    - [subclassable built-ins](#subclassable-built-ins)
-    - [promises](#promises)
-    - [math + number + string + object APIs](#math--number--string--object-apis)
-    - [binary and octal literals](#binary-and-octal-literals)
-    - [reflect api](#reflect-api)
-    - [tail calls](#tail-calls)
+    - map + set + weakmap + weakset
+    - proxies
+    - symbols
+    - subclassable built-ins
+    - promises
+    - math + number + string + object APIs
+    - binary and octal literals
+    - reflect api
+    - tail calls
     
     ---
 
-    ## Funcionalidades ECMAScript 6
-    ### Arrows
-    _Arrows_ são abreviações de funções usando a sintaxe `=>`. Elas são semelhantes semanticamente  ao recurso equivalente do C#, Java 8 e do CoffeeScript. Elas supotam expressões ou conjuntos de instruções. Ao conrário de _function_, _arrows_ compartilham o mesmo `this` que o do código que o envolve.
+    # As novidades do ES6
+    ## Declaração de variáveis
 
-        // Expressões
-        var pares   = evens.map(v => v + 1);
-        var numeros = evens.map((v, i) => v + i);
-
-        // Conjuntos de instruções
-        numeros.forEach(v => {
-          if (v % 5 === 0)
-            listaCincos.push(v);
-        });
-
-        // "this" léxico
-        var joao = {
-          _nome: "João",
-          _amigos: [],
-          listaAmigos() {
-            this._amigos.forEach(f =>
-              console.log( this._nome + " conhece " + f) );
-          }
-        }
-        
-    ---
-
-    ### Classes
-    Classes ES6 são o padrão _prototype_ melhorado. Ter uma única e conveniente forma declarativa fazem os padrões de classes mais fáceis de usar e icentivam a interoperabilidade. Classes suportam herança no modelo _ prototype, _super calls_, instanciamento, métodos estáticos e construtores.
-
-        class SkinnedMesh extends THREE.Mesh {
-            constructor(geometry, materials) {
-                super(geometry, materials);
-
-                this.idMatrix = SkinnedMesh.defaultMatrix();
-                this.bones = [];
-                this.boneMatrices = [];
-                //...
-            }
-            update(camera) {
-                //...
-                super.update();
-            }
-            static defaultMatrix() {
-                return new THREE.Matrix4();
-            }
-        }
-
-    ---
-
-
-    ### Object Literals aprimorados
-
-        var obj = {
-            // __proto__
-            __proto__: theProtoObj,
-            // Shorthand for ‘handler: handler’
-            handler,
-            // Methods
-            toString() {
-             // Super calls
-             return "d " + super.toString();
-            },
-            // Computed (dynamic) property names
-            [ 'prop_' + (() => 42)() ]: 42
-        };
-
-    ---
-
-    ### Template Strings
-
-    Template strings tornam muito fácil gerar _strings_. Ë semelhante à interpolação de _strings_ do Perl, Python e outros. Opcionalmente podmeos adicionar uma _tag_ que permitem a construção de uma string personalizada, evitando ataques com inserção de código ou montando estruturas de dados a partir do conteúdo de _strings_.
+    Para entender os benefícios da nova forma de se declarar variáveis em ES6 com  _let_  e  _const_, precisamos antes entender o conceito de  _hoisting_.
 
     
-        // Construção básica de uma string literal
-        `Em javascript '\n' é uam quebra de linha.`
+    ---
 
-        // Strings multilinha
-        `Isto não funciona
-         em Javascript.`
+    ## var x let  
 
-         // Contruindo uma query ao DOM
-        `Olá ${nome}, como está o ${nome_amigo}?`
+    **A diferença principal entre o  _var_  e o  _let_  é que enquanto o primeiro tem escopo de função, o segundo possui escopo de bloco:
+    
+    ```js
+    // escopo de função com var
+    function doSomething() {
+      var a = 1;
+      if (true) {
+        var b = 2; // b é declarado dentro do if mas é visível fora
+      }
+      var c = a + b; // 3
+    }
 
-        // Montar um prefixo de requisição HTTP para interpretar as substituições e construção
-        GET`http://foo.org/bar?a=${a}&b=${b}
-            Content-Type: application/json
-            X-Credentials: ${credentials}
-            { "foo": ${foo},
-              "bar": ${bar}}`(myOnReadyStateChangeHandler);
-      
+    //escopo de bloco com let
+    function doSomethingElse() {
+      let a = 1
+      if (true) {
+        let b = 2 // b é declarado dentro do if e não é visível fora
+      }
+      let c = a + b // Uncaught ReferenceError: b is not defined
+    }
 
+    ```
 
     ---
 
-    ### Destructuring
+    ## var x let  
 
-    Destructuring permite vincular usando padrões de expressões regulares, com suporte à _arrays_ e _objects_.  Destructuring é _fail-soft_, semelhante à busca padrão em objetos `foo["bar"]`, retornando o valor  `undefined`  quando não encontra.
+    Um outro exemplo de coisas inesperadas que acontecem quando usamos o var:
 
-        // list matching
-        var [a, , b] = [1,2,3];
+    ```js
+    for (var i = 0; i < 5; i++) { /* do something */ }
+    for (let j = 0; j < 5; j++) { /* do something else */}
 
-        // object matching
-        var { op: a, lhs: { op: b }, rhs: c }
-               = getASTNode()
-
-        // object matching shorthand
-        // binds `op`, `lhs` and `rhs` in scope
-        var {op, lhs, rhs} = getASTNode()
-
-        // Can be used in parameter position
-        function g({name: x}) {
-          console.log(x);
-        }
-        g({name: 5})
-
-        // Fail-soft destructuring
-        var [a] = [];
-        a === undefined;
-
-    ---
-
-    ### Default + Rest + Spread
-
-    Valores padrão nas chamadas de funções.  Transformação de um array em argumentos consegutivos em uma chamada de função, Vincular parametros sequenciais em um _array_. Substitui a necessidade de _arguments_ e  casos mais comuns.
-
-        function f(x, y=12) {
-          // y is 12 if not passed (or passed as undefined)
-          // y vale 12 se não for passado (ou passado como undefined)
-          return x + y;
-        }
-        f(3) == 15
-
-        function f(x, ...y) {
-          // y é um Array
-          return x * y.length;
-        }
-        f(3, "hello", true) == 6
-
-        function f(x, y, z) {
-          return x + y + z;
-        }
-        // Passa cada elemento do array como um argumento
-        f(...[1,2,3]) == 6
-
-    ---
-    ### Let + Const
-
-    Blocos com escopo vinculado. `let` é o novo `var`.  `const` é definido uam vez apenas.  Restrições estáticas previnem o uso antes da declaração.
-
-        function f() {
-          {
-            let x;
-            {
-              // funciona, nome com escopo definido no bloco
-              const x = "sneaky";
-              // error, const
-              x = "foo";
-            }
-            // erro, já definido no bloco
-            let x = "inner";
-          }
-        }
-
-    ---
-    ### Iterators + For..Of
+    console.log(i); // 5
+    console.log(j); // Uncaught ReferenceError: j is not defined
    
-    Objetos Iterator permitem  iterações como CLR IEnumerable ou Java Iteratable.  Generalizar o `for..in`  para uma iteração customizada com `for..of`.  Não é necessário executar em um _array_, permitindo padrões mais flexíveis, como LINQ.
+    ```
 
-         let fibonacci = {
-          [Symbol.iterator]() {
-            let pre = 0, cur = 1;
-            return {
-              next() {
-                [pre, cur] = [cur, pre + cur];
-                return { done: false, value: cur }
-              }
-            }
-          }
-        }
-
-        for (var n of fibonacci) {
-          // para a sequencia em 1000
-          if (n > 1000)
-            break;
-          print(n);
-        }
-
+    Em resumo, let conserta o antigo problema causado pelo hoisting fazendo com que a declaração de variáveis funcione da forma esperada pela maioria dos desenvolvedores.
 
     ---
 
-    ### Iterators + For..Of
+    ## let x const
 
-    A sintaxe de _Iteration_ é baseada nas interfaces (usando sintaxe do [TypeScript](http://typescriptlang.org) para demonstração apenas):
+    const funciona de forma semelhante. A única diferença é que as variáveis criadas não podem ser reatribuídas:
+    
 
+    ```js
+    let a = 1
+    a = 2
 
-        interface IteratorResult {
-          done: boolean;
-          value: any;
-        }
-        interface Iterator {
-          next(): IteratorResult;
-        }
-        interface Iterable {
-          [Symbol.iterator](): Iterator
-        }
- 
+    const b = 1
+    b = 2 // Uncaught SyntaxError "b" is read-only
 
-    ---
+    ```
 
-    ### Generators
-
-    _Generators_ simplificam a criação de iterações usando `function*` e `yield`. Uma func'ão declarada como _funcion*_ retorna uma instancia de um _Generator_. _Generators_ são subtipos de _iterators_ que incluem métodos adicionais,  `next` e `throw`. Eles permitem que valores sejam retornados ao _generator_, então `yield` é uma forma de expressão que retorna um valor.
-
-    Nota: Também pode ser usados para permitir 'esperar' como em programação assíncrona, veja também a proposta do ES7, `await`.
-
-
-        var fibonacci = {
-          [Symbol.iterator]: function*() {
-            var pre = 0, cur = 1;
-            for (;;) {
-              var temp = pre;
-              pre = cur;
-              cur += temp;
-              yield cur;
-            }
-          }
-        }
-
-        for (var n of fibonacci) {
-          // truncate the sequence at 1000
-          if (n > 1000)
-            break;
-          print(n);
-        }
-
-    ---
-
-    ### Generators
-
-    A interface do generator é (usando a sintaxe do  [TypeScript](http://typescriptlang.org) para demonstração apenas):
-
-
-        interface Generator extends Iterator {
-            next(value?: any): IteratorResult;
-            throw(exception: any);
-        }
-
-
-    ---
-    ### Comprehensions
-    _Comprehensions_ de arrays e _generator_ fornecem um processamento declarativo simples, semelhante ao usado em muitos padrões de programação funcional.
-
-        // Array comprehensions
-        var results = [
-          for(c of customers)
-            if (c.city == "Seattle")
-              { name: c.name, age: c.age }
-        ]
-
-        // Generator comprehensions
-        var results = (
-          for(c of customers)
-            if (c.city == "Seattle")
-              { name: c.name, age: c.age }
-        )
-
-    ---
-    ### Unicode
-
-
-    Adições retroativas para suporte completo a Unicode, incluindo a nova forma literal do unicode em strings e o novo modo do RegExp `u`, para lidar com pontos no código, assim como novas APIs para processar _strings_ em códigos 21bit. Essas adições auxiliam a contrução de _apps_ globais em Javascript.
-
-        // o mesmo que no ES5.1
-        "𠮷".length == 2
-
-        // novo comportamento RegExp, opcionalopt-in ‘u’
-        "𠮷".match(/./u)[0].length == 2
-
-        // nova sintaxe
-        "\u{20BB7}"=="𠮷"=="\uD842\uDFB7"
-
-        // nova opção para string
-        "𠮷".codePointAt(0) == 0x20BB7
-
-        // for-of itera em pontos de código
-        for(var c of "𠮷") {
-          console.log(c);
-        }
-
-
-    ---
-
-    ### Modules
+    É comum achar que const deixa a variável imutável, assim como algumas libs como ImmutableJS. Isso não é verdade. As propriedades de um objeto, por exemplo, podem ser alteradas:
    
-    Suporte nativo para módulos e definição de componentes. Códifica padrões de carregamento de módulo populares (AMD, CommonJS). Comportamento de carregamento em tempo de execução definido por um padrão no _host_. Modelos implícitos assíncronos , nenhum código é executado até que os módulos requisitados estejam disponíveis e processados.
+    ```js
+    const object = {
+        property: 1
+    }
 
+    object.property = 2
+    console.log(object.property) // 2
+    ```
+
+    ---
+
+    ## Parâmetro de funções
     
-        // lib/math.js
-        export function sum(x, y) {
-          return x + y;
+    Algumas pequenas alterações foram adicionadas em relação a parametrização de funções. Apesar dessas mudanças serem pequenas, elas trazem enormes benefícios.
+    
+
+
+    ---
+
+    ## default parameters
+    Os parâmetros de funções tem undefined como valor default. Porém, em alguns casos, pode ser necessário utilizar um outro valor. Com a versão atual do JavaScript (ES5) nós já podemos fazer isso dessa forma:
+
+    ```js
+    var multiply = function(x, y) {
+       y = y | 1;
+       return x * y;
+    };
+
+    multiply(3, 2); // 6
+    multiply(3); // 3
+
+    ```
+
+    O ES6 introduziu uma nova forma, bem mais simples, de se fazer isso. Basta adicionar o valor default na definição do parâmetro desejado:
+
+    ```js
+    const multiply = (x, y = 1) => {
+      return x * y
+    }
+
+    multiply(3, 2) // 6
+    multiply(3) // 3
+
+    ```
+
+    ---
+    ## default parameters
+
+    Ou então, com apenas uma linha:
+
+    ```js
+    const multiply = (x, y = 1) => x * y
+
+    multiply(3, 2) // 6
+    multiply(3) // 3
+
+    ```  
+
+    ---
+
+    ## REST parameters
+    
+    Na versão atual do JavaScript podemos utilizar o objeto arguments para pegar todos os parâmetros de uma função:
+
+
+    ```js
+    var sum = function() {
+        var result = 0;
+        for (var i=0; i < arguments.length; i++) {
+            result += arguments[i];
         }
-        export var pi = 3.141593;
-       
+        return result;
+    }
 
-        // app.js
-        module math from "lib/math";
-        alert("2π = " + math.sum(math.pi, math.pi));
-       
+    sum(1, 2, 3, 4, 5); // 15
 
-        // otherApp.js
-        import {sum, pi} from "lib/math";
-        alert("2π = " + sum(pi, pi));
+    ```
 
+    O  _arguments_  porém, apresenta alguns problemas:
 
-    ---
-
-    ### Modules        
-
-    Algumas funcionalidades adicionais incluem `export default` e `export *`:
-
-        // lib/mathplusplus.js
-        export * from "lib/math";
-        export var e = 2.71828182846;
-        export default function(x) {
-            return Math.exp(x);
-        }
-
-        // app.js
-        module math from "lib/mathplusplus";
-        import exp from "lib/mathplusplus";
-        alert("2π = " + exp(math.pi, math.e));
-
-
-    ---
-    ### Module Loaders
-
-    _Module loaders_ suportam:
-    - carregamento dinâmico
-    - isolamento de estado
-    - isolamento de _namespace_ global
-    - _hooks_ de compilação
-    - virtualização aninhada 
-
-    O _module loader_ padrão pode ser configurado e novos _loaders_ podem ser contruídos para avaliar e carregar código em contexto isolado ou restrito
-
-        // Carregamento dinamico – ‘System’ é o loader padrão
-        System.import('lib/math').then(function(m) {
-          alert("2π = " + m.sum(m.pi, m.pi));
-        });
-
-        // Cria sandboxes de execução – novos Loaders
-        var loader = new Loader({
-          global: fixup(window) // replace ‘console.log’
-        });
-        loader.eval("console.log('hello world!');");
-
-        // Manipulação do módulo cache
-        System.get('jquery');
-        System.set('jquery', Module({$: $})); // WARNING: não finalizado ainda
-
-    ---
-    ### Map + Set + WeakMap + WeakSet
-    
-
-    Estruturas de dados eficientes para algorítimos comuns. _WeakMaps_ fornecem um mapa seguro de <objeto-chave class=""></objeto-chave>
-
-        // Sets
-        var s = new Set();
-        s.add("hello").add("goodbye").add("hello");
-        s.size === 2;
-        s.has("hello") === true;
-
-        // Maps
-        var m = new Map();
-        m.set("hello", 42);
-        m.set(s, 34);
-        m.get(s) == 34;
-
-        // Weak Maps
-        var wm = new WeakMap();
-        wm.set(s, { extra: 42 });
-        wm.size === undefined
-
-        // Weak Sets
-        var ws = new WeakSet();
-        ws.add({ data: 42 });
-        // Because the added object has no other references, it will not be held in the set
-
-    ---
-    ### Proxies
-    
-    _Proxies_ permitem a criação de objetos com todos os comportamentos disponíveis no opjeto que o contém, Podem ser usados para interceptação, virtualização de objetos, _logs_, _profiles_, etc.
-
-        // Proxy em um objeto normal
-        var target = {};
-        var handler = {
-          get: function (receiver, name) {
-            return `Hello, ${name}!`;
-          }
-        };
-
-        var p = new Proxy(target, handler);
-        p.world === 'Hello, world!';
-
-    ---
-    ### Proxies
-
-        // Proxy em  um objeto função
-        var target = function () { return 'I am the target'; };
-        var handler = {
-          apply: function (receiver, ...args) {
-            return 'I am the proxy';
-          }
-        };
-
-        var p = new Proxy(target, handler);
-        p() === 'I am the proxy';
-
-    ---
-    ### Proxies
-
-    Existem métodos disponíveis para todas as meta-operaçoes em tempo de execução:
+    1.  O objeto parece com um  _array_, mas não é exatamente um
+    2.  Todos os parâmetros da função são automaticamente atribuídos ao  _arguments_. Não temos uma forma clara de diferenciar os parâmetros.
 
    
-        var handler =
-        {
-          get:...,
-          set:...,
-          has:...,
-          deleteProperty:...,
-          apply:...,
-          construct:...,
-          getOwnPropertyDescriptor:...,
-          defineProperty:...,
-          getPrototypeOf:...,
-          setPrototypeOf:...,
-          enumerate:...,
-          ownKeys:...,
-          preventExtensions:...,
-          isExtensible:...
-        }
 
     ---
-    ### Symbols
-  
-    _Symbols_ permitem controle sobre o estado do objeto. _Symbols_ permitem que propriedades sejam indexadas tanto por _string_ (como no ES5) como _symbol_. _Symbols_ são um novo tipo primitivo. Parâmetro opcional, `name` , usado em _debug_, mas não é parte da identidade. _Symbols_ são únicos (como gensym), mas não são privados já que são expostos em funcionalidades como`Object.getOwnPropertySymbols`.
 
-        (function() {
-
-          // module scoped symbol
-          // symbol no escopo do módulo
-          var key = Symbol("key");
-
-          function MyClass(privateData) {
-            this[key] = privateData;
-          }
-
-          MyClass.prototype = {
-            doStuff: function() {
-              ... this[key] ...
-            }
-          };
-
-        })();
-
-        var c = new MyClass("hello")
-        c["key"] === undefined
+    # REST parameters
     
-    ---
-    ### Subclassable Built-ins
-    
-    No ES6, objetos nativos como `Array`, `Date` e DOM `Element`s podem ter subclasses.
-
-    Contrução de objetos para uma função chamada  `Ctor` agora levam duas etapas (ambas disparadas virtualmente):
-    - Chame `Ctor[@@create]` para alocar o objeto, installing any special behavior
-    - Invoke constructor on new instance to initialize
-
-    The known `@@create` symbol is available via `Symbol.create`.  Built-ins now expose their `@@create` explicitly.
-
-        // Pseudo-code of Array
-        class Array {
-            constructor(...args) { /* ... */ }
-            static [Symbol.create]() {
-                // Install special [[DefineOwnProperty]]
-                // to magically update 'length'
-            }
-        }
-
-    ---
-    ### Subclassable Built-ins
-
-        // User code of Array subclass
-        class MyArray extends Array {
-            constructor(...args) { super(...args); }
-        }
-
-        // Two-phase 'new':
-        // 1) Call @@create to allocate object
-        // 2) Invoke constructor on new instance
-        var arr = new MyArray();
-        arr[1] = 12;
-        arr.length == 2
-
-    ---
-    ### Math + Number + String + Object APIs
-
-    Many new library additions, including core Math libraries, Array conversion helpers, and Object.assign for copying.
-
-    
-        Number.EPSILON
-        Number.isInteger(Infinity) // false
-        Number.isNaN("NaN") // false
-
-        Math.acosh(3) // 1.762747174039086
-        Math.hypot(3, 4) // 5
-        Math.imul(Math.pow(2, 32) - 1, Math.pow(2, 32) - 2) // 2
-
-        "abcde".contains("cd") // true
-        "abc".repeat(3) // "abcabcabc"
-
-        Array.from(document.querySelectorAll('*')) // Returns a real Array
-        Array.of(1, 2, 3) // Similar to new Array(...), but without special one-arg behavior
-        [0, 0, 0].fill(7, 1) // [0,7,7]
-        [1,2,3].findIndex(x => x == 2) // 1
-        ["a", "b", "c"].entries() // iterator [0, "a"], [1,"b"], [2,"c"]
-        ["a", "b", "c"].keys() // iterator 0, 1, 2
-        ["a", "b", "c"].values() // iterator "a", "b", "c"
-
-        Object.assign(Point, { origin: new Point(0,0) })
-
-    ---
-    ### Binary and Octal Literals
-
-    Two new numeric literal forms are addded for binary (`b`) and octal (`o`).
+    Com esses problemas em mente, os  _Rest Parameters_  foram adicionados no ES6. O mesmo exemplo da soma poderia ser reescrito dessa forma:
 
 
-        0b111110111 === 503 // true
-        0o767 === 503 // true
-
-    ---
-    ### Promises
-
-    Promises are a library for asynchronous programming.  Promises are a first class representation of a value that may be made available in the future.  Promises are used in many existing JavaScript libraries.
-
-    
-        function timeout(duration = 0) {
-            return new Promise((resolve, reject) => {
-                setTimeout(resolve, duration);
-            })
-        }
-
-        var p = timeout(1000).then(() => {
-            return timeout(2000);
-        }).then(() => {
-            throw new Error("hmm");
-        }).catch(err => {
-            return Promise.all([timeout(100), timeout(200)]);
+    ```js
+    function sum(...numbers) {
+        let result = 0
+        numbers.forEach((number) => {
+            result += number
         })
-    
+        return result
+    }
+
+    sum(1, 2, 3, 4, 5) // 15
+
+    ```
 
     ---
 
-    ### Reflect API
+    ## arrow functions
     
-    Full reflection API exposing the runtime-level meta-operations on objects.  This is effectively the inverse of the Proxy API, and allows making calls corresponding to the same meta-operations as the proxy traps.  Especially useful for implementing proxies.
+    Os arrow functions são um excelente syntax sugar na criação de funções. Uma função que seria escrita dessa forma em ES5:
 
+    ```js
+    var sum = function(x, y) {
+      return x + y;
+    };
 
-        // No sample yet
+    sum(1, 2); // 3
+    ```
+
+    Pode ser escrita dessa forma em ES6 com o uso das arrow functions:
+
+    ```js
+    const sum = (x, y) => {
+      return x + y
+    }
+
+    sum(1, 2) // 3
+
+    ```
+
+    Dessa forma já conseguimos ver uma maior expressividade e um menor número total de caracteres. Mas podemos melhorá-la ainda mais:
+    
+    ```js
+    const sum = (x, y) => x + y
+
+    sum(1, 2) // 3
+
+    ```
 
     ---
-    ### Tail Calls
-    Calls in tail-position are guaranteed to not grow the stack unboundedly.  Makes recursive algorithms safe in the face of unbounded inputs.
 
-        
-        function factorial(n, acc = 1) {
-            'use strict';
-            if (n <= 1) return acc;
-            return factorial(n - 1, n * acc);
+    ## arrow functions
+    
+    Com funções de apenas uma linha, podemos simplesmente omitir o return e as chaves.
+
+    Mas o verdadeiro benefício das arrows functions não está na expressividade, ele se encontra na resolução de um antigo problema da linguagem: o this.
+
+    No exemplo abaixo em ES5, podemos observar o this sendo utilizado de forma errada:
+
+    ```js
+
+    function Widget() {
+        var button = document.getElementById('button');
+        button.addEventListener('click', function() {
+            this.doSomething(); // o 'this' não aponta para Widget como esperado e provocará um erro.
+        });
+    }
+
+    ```
+    ---
+
+    ## arrow functions
+    
+    Uma das formas mais comuns de resolver esse problema, é usando o bind() ou então com self = this.
+
+    Com as arrow functions isso não é necessário. O this funcionará exatamente da forma esperada:
+
+    ```js
+    function Widget() {
+        const button = document.getElementById('button')
+        button.addEventListener('click', () => {
+            this.doSomething() // o 'this' aponta para Widget e não provocará nenhum erro.
+        })
+    }
+
+    ```
+
+    
+    ---
+
+    ## destructuring
+
+    Uma nova forma de declarar variáveis extraindo valores de objetos e arrays é através do destructuring. Ela funciona dessa forma:
+
+    ```js
+    const [a, b] = [1, 2]
+
+    console.log(a) // 1
+    console.log(b) // 2
+    
+    ```
+
+    E com rest parameters:
+
+
+
+    ```js
+    const [a, b, ...rest] = [1, 2, 3, 4, 5]
+
+    console.log(a) // 1
+    console.log(b) // 2
+    console.log(rest) // 3, 4, 5
+
+    ```
+
+    
+    ---
+
+    ## destructuring
+
+    Com objetos ela funciona desse jeito:
+
+    ```js
+    const person = { name: 'Jackson', age: 36 }
+
+    const {name, age} = person
+
+    console.log(name) // 'Jackson'
+    console.log(age) // 36
+
+    ```
+
+    ---
+
+    ## destructuring
+    
+    Provavelmente, o uso mais comum vai ser no import de libs. Vamos ter o poder de transformar isso:
+
+    ```js
+    var ReactRouter = require('react-router');
+    var Route = ReactRouter.Route;
+    var Link = ReactRouter.Link;
+    var Router = ReactRouter.Router;
+
+    ```
+
+    Nisso:
+
+    ```js
+    const { 
+        Route, 
+        Link, 
+        Router
+    } = require('react-router')
+
+    ```
+
+    
+    ---
+    # Orientação a Objetos
+    ## Classes
+
+    Classes nos dão uma sintaxe amigável que definem o estado e o comportamento de objetos que representam as abstrações que usamos diariamente.
+
+    ### constructor
+    
+    Por exemplo, se necessitarmos de uma abstração para animais em que cada animal possui um nome, poderíamos implementar dessa forma:
+
+
+    ```js
+    class Animal {
+      constructor(name) {
+        this._name = name
+      }
+
+      getName() {
+        return this._name
+      }
+
+      setName(name) {
+        this._name = name
+      }
+    }
+
+    ```
+    ---
+    ## Classes
+
+    ```js
+    const animal = new Animal('dog')
+    animal.getName() // dog
+    animal.setName('cat')
+    animal.getName() // cat
+
+    ```
+
+    O método constructor tem como tarefa fazer a inicialização da instância. Ele é chamado automaticamente na criação da mesma e garante que ela esteja em um estado válido.
+
+    ---
+    ## Classes
+
+
+    ### getters/setters
+
+    Como **_getters_ e _setters_**  são muito comuns na utilização de classes, o ES6 veio com um _syntax sugar_ para lidar com os mesmos.
+
+    Então podemos reescrever o exemplo anterior dessa forma melhorada:
+
+
+    ```js
+
+    class Animal {
+      constructor(name) {
+        this._name = name
+      }
+
+      get name() {
+        return this._name
+      }
+
+      set name(name) {
+        this._name = name
+      }
+    }
+
+    ```
+
+    ---
+    ## Classes
+
+    ## getters/setters  
+
+    ```js
+    const animal = new Animal('dog')
+    animal.name // dog
+    animal.name = 'cat'
+    animal.name // cat
+
+    ```
+
+    Lembrando que a principal função dos  **_getters/setters_**  é proteger os dados internos das instâncias de um objeto.
+
+    Se você está se perguntando o porquê do  _underscore_ antes da propriedade  _name_, a resposta simples é de que isso é uma convenção que indica que essa variável deve ser mantida privada.
+
+    
+    ---
+
+    ## Classes
+    ### herança
+
+    Vamos pensar em um caso em que além de um nome, um Animal também terá um novo comportamento: emitir um som.
+
+    Podemos utilizar o conceito de herança com o extends e implementar dessa forma:
+
+    ```js
+
+    class Animal {
+      constructor(name) {
+        this._name = name
+      }
+       
+      speak() {
+        console.log(`${this._name} makes a noise`)
+      }
+    }
+
+
+    ```    
+    ---
+
+    ## Classes
+    ### herança
+
+    ```js
+
+    class Dog extends Animal {
+      speak() {
+        console.log(`${this._name} barks`)
+      }
+    }
+
+    class Cat extends Animal {
+      speak() {
+        console.log(`${this._name} meows`)
+      }
+    }
+
+
+    ```    
+    ---
+
+    ## Classes
+    ### herança
+
+    ```js
+
+    const dog = new Dog('Rex')
+    dog.speak() // Rex barks
+
+    const cat = new Cat('Napoleon')
+    cat.speak() // Napoleon meows
+
+
+    ```
+
+    
+    ---
+
+    ## Módulos
+
+    Um dos grandes problemas do JavaScript era não ter um sistema  _built-in_  de módulos assim como a maioria das linguagens possui.
+
+    Dessa ausência surgiram algumas possíveis soluções como CommonJS e AMD. Se você quiser saber mais sobre esses dois últimos, eu sugiro  [essa  _thread_  no Stack Overflow](http://stackoverflow.com/questions/16521471/relation-between-commonjs-amd-and-requirejs).
+
+    
+    ---
+
+    ## ES6 Modules
+
+
+    A maioria dos desenvolvedores que já trabalhou em projetos grandes sabe a importância dos módulos: organizar o sistema, aumentar o reuso e diminuir a complexidade de cada pequeno trecho do seu code base.
+
+    
+    ---
+
+    ## export/import
+    
+    Exportar módulos é bem simples. Após criarmos uma função podemos simplesmente adicionar a palavra export antes da definição da mesma:
+
+
+    ```js
+
+    // lib.js
+    export function sum(x, y) {
+      return x + y
+    }
+
+    ```
+    E para importar esse módulo em outro arquivo também é simples:
+
+    ```js
+
+    import { sum } from 'lib'
+
+    sum(1, 2) // 3
+
+    ```
+
+    
+    ---
+
+    ## export/import
+    Com múltiplas funções é bem semelhante:
+
+    ```js
+    // lib.js
+    export function sum(x, y) {
+        return x + y
+    }
+
+    export function mult(x, y) {
+        return x * y
+    }
+
+    ```
+
+    E para importar:
+
+    ```js
+    import { sum, mult } from 'lib'
+
+    sum(1, 2) // 3
+    mult(1, 2) // 2
+
+    ```
+    Podemos também importar o módulo completo:
+
+
+    ```js
+    import * as lib from 'lib'
+
+    lib.sum(1, 2) // 3
+    lib.mult(1, 2) // 2
+
+    ```
+    
+    ---
+
+    ## classes
+
+    Para importar e exportar classes também não há muitas mudanças, basta criar uma classe com o export na frente:
+
+    ```js
+    // developer.js
+    export class Developer {
+        constructor(name) {
+            this._name = name
         }
 
-        // Stack overflow in most implementations today,
-        // but safe on arbitrary inputs in eS6
-        factorial(100000)
-        
+        get name() {
+            return this._name
+        }
+    }
+
+    ```
+    Agora podemos importá-la assim:
+
+    ```js
+    import { Developer } from 'developer'
+
+    const dev = new Developer('Jackson')
+    dev.name // 'Jackson'
+
+    ```
+
+    ---
+
+    ## default
+    É comum termos a necessidade de exportar apenas uma função/classe por arquivo. Nesse cenário podemos utilizar a exportação default:
+
+
+    ```js
+    // square.js
+    export default function (x) {
+      return x * x
+    }
+
+    ```
+
+    Uma das vantagens é que o cliente (quem faz o import) é que vai setar o nome do módulo como bem quiser:
+
+    ```js
+    import square from 'square'
+
+    square(2) // 4
+
+    ```
+
+    ---
+    class: center, middle
+    # JavaScript Assíncrono
+
+    ---
+
+    ## JavaScript Assíncrono – Introdução
+
+    JavaScript tem muitas qualidades que eu, pessoalmente, admiro muito. Uma das mais divertidas é, sem dúvida, as possibilidades assíncronas desta linguagem!
+
+    Uma feature divertida e, ao mesmo tempo, complexa. O JavaScript nos dá a possibilidade de escrever utilizando alguns paradigmas interessantes (e dignos de estudo aprofundado) como o  _paradigma procedural_, o  _paradigma funcional_  ou com  _Orientação a Objetos_  (por meio de protótipos, não de classes).
+    
+    ---
+
+    ## JavaScript Assíncrono – Introdução  
+    
+    Mas todo esse benefício tem um preço, e o preço é justamente a complexidade que isso traz na hora de lermos e compreendermos um código.
+
+    Além disso, o JavaScript também trabalha com fluxos bem distintos e nós podemos “quebrar” tais fluxos utilizando algumas features da linguagem, como  `setTimeout`,  `setInterval`,  `addEventListener`, entre outros.
+
+    O JavaScript sempre teve como ponto forte a possibilidade de trabalhar de forma assíncrona e, há muito, vem evoluindo o assunto. Tivemos uma importante explosão com o Ajax há mais de uma década e, antes dele, já usávamos  _iframes_  para atingirmos resultados parecidos.
+
+    ---
+
+    ## JavaScript Assíncrono – Introdução
+
+    Promises vieram para nos ajudar a superar o famoso  _callback hell_, uma verdadeira “maçaroca” em que alguns códigos acabavam se tornando! As promises trouxeram um padrão para lidarmos com código assíncrono, para desenvolvermos APIs mais robustas e modernas e organizar nosso código assíncrono de maneira mais legível. Mas elas também não são nenhuma “bala de prata” e tem seus problemas.
+
+    O JavaScript moderno conta com várias novas opções entre elas, Promises, Async/Await, Generators, Web Worker…
+
+    ---
+
+    ## JavaScript Assíncrono – Introdução
+
+    Uma série de problemas encontradas ao utilizar  _callbacks_  foram explorados junto com suas soluções. Aprendemos a utilizar  _closures_, contornar o tratamento de excessões, reconhecer o comportamento do  `this`  e evitar o Callback Hell. O que veremos a seguir são algumas das reais limitações das  _callbacks_.
+
+    ## Limitações das Callbacks
+
+    Apenas uma  _callback_  pode ser associada a um determinado evento do  _loop_  interno de eventos do JavaScript.
+
+    ```javascript
+    var xmlhttp = new XMLHttpRequest()
+    xmlhttp.open('GET', 'http://url.com', true)
+    xmlhttp.onreadystatechange = function callback() {}
+    xmlhttp.send()
+    ```
+
+    Veja acima o exemplo de uma chamada tradicional Ajax que só aceita uma única  _callback_  para lidar com o retorno do servidor. 
+    ---
+
+    ## JavaScript Assíncrono – Introdução
+
+    As funções mais antigas da API do DOM enfrentavam este problema para lidar com eventos: 
+
+    ```javascript
+        document.getElementById('bla').onclick = callback.
+    ```
+
+    Algumas APIs suavizam este problema ao modelar suas interações através de uma interface orientada a eventos. Desta maneira, um único evento da API pode ter mais de uma  _callback_  a ser executada no futuro. Cada  _callback_  associada a um evento da API será registrada no  _loop_  de eventos do JavaScript.
+
+    ---
+
+    ## JavaScript Assíncrono – Introdução
+
+    Fazemos isto com frequência utilizando jQuery para associar  _callbacks_  a eventos do DOM. Cada linha do código abaixo pode muito bem estar distribuída entre módulos da sua aplicação:
+
+    ```javascript
+    element.on('click', callback1)
+    element.on('click', callback2)
+    element.on('click', callback3)
+    ```
+
+    Porém, para os casos da API não suportar o modelo de eventos, atribuir múltiplas  _callbacks_resulta em um alto acoplamento. Como exemplo, observe o código abaixo que não pode ser facilmente distribuído em diferentes módulos da aplicação:
+
+    ```javascript
+    xmlhttp.onreadystatechange = function callback() {
+      callback1()
+      callback2()
+      callback3()
+    }
+    ```
+
+    ---
+
+    ## JavaScript Assíncrono – Introdução
+
+    Outro ponto que já deve ter notado é que sempre nos referimos a  _callbacks_  como porções de código a serem executadas em um tempo conveniente  **no futuro**. Isto porque o modelo de  _callbacks_  não possui memória. Sempre que o fluxo de execução associado a  _callback_  achar oporturno, esta será executada.
+
+    Observe o caso em que é preciso esperar que o documento esteja carregado para executar um determinado código. O DOM expõe o evento  `DOMContentLoaded`  que indica justamente o instante em que o documento está totalmente carregado. Mas este evento ocorre uma única vez.
+
+    ---
+
+    ## JavaScript Assíncrono – Introdução
+
+    Os módulos da aplicação que dependem do carregamento do documento devem ser definidos antes deste evento disparar, ou nunca serão executados. Com o domínio de técnicas que temos até aqui, conseguimos contornar este problema de uma maneira grosseira. Teremos apenas que garantir que o código a seguir seja executado antes do documento estar completamente carregado. Sua função é indicar através da variável  `isReady`  se o documento está carregado:
+
+    ```javascript
+    window.isReady = false
+    document.addEventListener('DOMContentLoaded', function (){ 
+      window.isReady = true
+    })
+    ```
+
+    E então, nos módulos da aplicação, teremos que implementar uma lógica baseada na variável  `isReady`. É preciso conferir se o documento está carregado e caso contrário, atribuir uma  _callback_ao evento de carregamento:
+
+    ```javascript
+    if (isReady) {
+      callback1()
+    } else {
+      document.addEventListener('DOMContentLoaded', callback1)
+    }
+    ```
+
+    ---
+
+    ## JavaScript Assíncrono – Introdução
+
+
+    As limitações e dificuldades já estão claras até aqui, mas podemos adicionar um tanto mais de complexidade. Podemos supor que estes mesmos módulos que dependem de o documento estar completo, também dependem da resposta de uma requisição assíncrona que retorna o perfil do usuário. Além da variável  `isReady`  teríamos mais outra, digamos  `isProfileLoaded`  para controlar os diferentes carregamentos.
+
+    Em resumo:  **algumas APIs aceitam uma única  _callback_,  _callbacks_  não matém memória e são difíceis de coordenar quando temos fluxos assíncronos executando em paralelo**.
+
+    ---
+    ## JavaScript Assíncrono – Introdução
+    ### O problema - callback hell
+    
+    Sempre que você precisa executar uma ação após uma requisição assíncrona, normalmente o código vai se parecer com isso:
+
+    ```javascript
+    obj.asyncFunction(function( response ) {
+      response.asyncFunction(function( response2 ) {
+        response2.asyncFunction(function( response3 ) {
+          response3.asyncFunction(function(response4 ) {
+            return response4;
+          });
+        });
+      });
+    });
+    ```
+
+    Esse é o famoso callback hell, onde você depende do retorno de cada requisição para iniciar a próxima! 
+
+    ---
+
+    ## Fetch API 
+
+    A API Fetch é mais uma API que veio para nos ajudar e facilitar certos trabalhos repetitivos.
+
+    No lugar de usarmos os antigos objetos  [XMLHTTPREQUEST](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest), podemos usar a API fetch para lidar com requisições HTTP.
+
+
+    ---
+
+    ## Fetch API 
+
+    ### PROMISE
+
+    Uma coisa muito legal é que a  _Fetch API_  segue o padrão de  [PROMISE](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise).
+
+    ```javascript
+        const URL_TO_FETCH = 'https://randomuser.me/api';
+        fetch(URL_TO_FETCH, {
+          method: 'get' // opcional 
+        })
+        .then(function(response) { 
+            console.log(response)
+        })
+        .catch(function(err) { 
+          console.error(err); 
+        });
+
+    ```
+
+    Simples assim… ou nem tanto!
+
+    
+
+    ---
+
+    ## Fetch API 
+
+    ### Como tratar a resposta do fetch
+
+    A resposta retornada pelo fetch trata-se de um objeto  `Response`. Este objeto tem diversas métodos extremamente úteis, dentre eles, o método  `text()`, o qual podemos usar para recuperar a informação retornada pela requisição, no formato texto. Este método nos retornará uma Promise que, quando resolvida, nos entregará o conteúdo da requisição:
+
+    ```javascript
+    const URL_TO_FETCH = 'https://randomuser.me/api';
+    fetch(URL_TO_FETCH, { 
+      method: 'get' // opcional 
+    })
+    .then(function(response) { 
+      response.text()
+      .then(function(result){ 
+         console.log(result); 
+       }) 
+    })
+    .catch(function(err) { console.error(err); });
+
+    ```
+
+    ---
+
+    ## Fetch API 
+
+    ### FETCHING JSON
+
+    O objeto Response também tem o método  `json`, que também retorna uma promise, para facilitar caso esteja acessado uma API JSON.
+
+    ```javascript
+    fetch(URL_TO_FETCH)
+      .then(function(response){
+        response.json().then(function(data){
+          console.log(data);
+        });
+      })
+      .catch(function(err){
+        console.error('Failed retrieving information', err);
+      });
+
+    ```
+
+
+    ---
+
+    ## Fetch API 
+
+    ### USANDO SYNTAXE ES6
+
+    Podemos nos utilizar das atualizações da linguagem, como uso de arrow functions, além de otimizar a forma como lidamos com promises, evitando encadeamento.
+
+    ```javascript
+    fetch(URL_TO_FETCH)
+      .then(response => response.json()) // retorna uma promise
+      .then(result => {
+        console.log(result);
+      })
+      .catch(err => {
+      // trata se alguma das promises falhar
+      console.error('Failed retrieving information', err);
+    });
+
+    ```
+
+    
+
+    ---
+
+    ## Fetch API 
+
+    ### FETCH DE OUTROS TIPOS/OBJETOS
+
+    Mas também podemos recuperar o resultado da requisição lendo seus bytes, para por exemplo, carregar uma imagem, pdf, ou outro tipo de formato/blob. Para conseguirmos isto, precisamos acessar um  `reader`da resposta. Para isto, usamos o método  `getReader`  vindo no  `body`  da resposta.
+
+    ```javascript
+    let reader = response.body.getReader();
+
+    ```
+
+    O interessante é que um objeto  _Response_  só pode ser manuseado por um único reader. Sendo assim, após manusea-lo, não é possível pegar outro reader.
+
+    O reader tem o método  `read`, que retorna uma promise:
+
+    ```javascript
+    reader.read().then(function(data){
+      // use o data
+    });
+
+    ```
+    
+
+    ---
+
+    ## Fetch API 
+
+    Agora sim, podemos usar o conteúdo! Ou quase isto!
+
+    Esta Promise é resolvida com um objeto que tem o conteúdo retornado pela requisição em sua propriedade  `value`. Mas ela vem otimizada em  `Uint8Array`. Se quiser transformar este objeto em String, podemos usar o  `fromCharCode`  do objeto  _String_.
+
+    ```javascript
+    console.log(
+      String.fromCharCode.apply(null, data.value)
+    );
+
+    ```
+
+    Caso tenha alguma dificuldade com o método  _apply_  do objeto  _Function_, leia esse artigo sobre  [CALL, BIND E APPLY](http://felipenmoura.com/articles/call-bind-e-apply-no-javascript-parte-2/).
+
+    ---
+
+    ## Fetch API 
+
+    Em resumo, caso queira usar a resposta utilizando readers, use:
+
+    ```javascript
+    fetch(URL_TO_FETCH)
+      .then(function(response){
+        response.body
+          .getReader()
+          .read()
+          .then(function(data){
+            // transformando em string, para
+            // visualizarmos melhor
+            var fetched = String.fromCharCode.apply(null, data.value);
+            console.log(fetched);
+        });
+      })
+      .catch(function(err){
+        console.error('Failed retrieving information', err);
+      });
+
+    ```
+
+
+    ---
+
+    ## Fetch API 
+
+    ### FETCH OPTIONS
+
+    Em nosso primeiro exemplo, passamos também um objeto com a propriedade  `method`. Este objeto é opcional, onde method será por padrão “get”.
+
+    Mas este objeto nos permite passar alguns outros parâmetros.
+
+    ```javascript
+    fetch(URL_TO_FETCH, {
+      method: 'POST',
+      mode: 'cors', // pode ser cors ou basic(default)
+      redirect: 'follow',
+      headers: new Headers({
+        'Content-Type': 'text/plain'
+      })
+    }).then(function(response) {
+      // tratar a response
+    });
+
+    ```
+
+    ---
+
+    ## Fetch API 
+
+    Podemos criar a requisição utilizando os métodos:
+
+    -   GET
+    -   POST
+    -   PUT
+    -   DELETE
+    -   HEAD
+
+    Você deve ter reparado no uso de  `new Headers`.
+
+
+    ---
+
+    ## Fetch API 
+
+    ### HEADERS
+
+    Instancias de  _Header_  podem ser passadas para o objeto  _Request_  (criado implicitamente pelo  _fetch_), a fim de de possibilitar a manipulação das propriedades de  `header`  da requisição.
+
+    ```javascript
+    // Podemos instanciar um Header já passando um objeto 
+    // com as propriedades que queremos setar 
+    var headers = new Headers({ 'Content-Type': 'text/plain', 'X-Custom-Header': 'valor' });
+
+    // mas também podemos adicionar programaticamente 
+    // depois de já termos instanciado 
+    headers.append('X-Custom-Header', 'valor');
+
+    // além disso podemos checar, pegar ou setar valores 
+    headers.get('Content-Type'); 
+
+    // "text/plain" 
+    headers.set('Content-Type', 'application/json'); 
+    headers.has('Content-Type'); // true
+
+    // assim como deletar propriedades de Header 
+    headers.delete('X-Custom-Header');
+    ```
+
+
+    ---
+
+    ## Fetch API 
+
+    ### FETCH POR POST
+
+    Quando queremos enviar dados pelo método  _POST_, podemos passar estas informações em um objeto na propriedade  `body`  da requisição.
+
+    Caso queiramos passar os dados de um formulário pela requisição, podemos utilizar o objeto  [FORMDATA](https://developer.mozilla.org/en/docs/Web/API/FormData):
+
+    ```javascript
+    fetch(URL_TO_POST, {
+      method: 'post',
+      body: new FormData(document.querySelector('#my-form'))
+    }).then(function(response){
+      // trate a resposta aqui
+    });
+
+    ```
+    ---
+
+    ## Fetch API 
+
+    A  _Fetch API_  nos facilita muito o trabalho no dia-a-dia, e também formaliza e padroniza a forma como faremos requisições. Uma coisa importante também, é que a  _Fetch API_  é a base para outras tecnologias que estão surgindo e que serão abordadas em outros posts, como  _Cache API_  e  _Web Services_.
+
+    Algumas fontes para leitura:
+
+    -   [Fetch API e o JavaScript](https://braziljs.org/blog/fetch-api-e-o-javascript/)
+    -   [POLYFILL / SHIM](https://github.com/github/fetch)
+    -   [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
+    -   [DAVID WALSH’S BLOG](https://davidwalsh.name/fetch)
+    -   [FORMDATA](https://developer.mozilla.org/en/docs/Web/API/FormData)
+    -   [HEADERS CONSTRUCTOR](https://developer.mozilla.org/en-US/docs/Web/API/Headers/Headers)
+    
+    ---
+
+    ## Promises
+
+    Promises nos ajudam a trabalhar com código assíncrono de uma maneira muito mais organizada.
+
+    ### ESPECIFICAÇÃO
+
+    A especificação é “direta e reta”.
+
+    ```javascript
+    let p = new Promise (function (resolve, reject) {
+        // resolva ou rejeite
+    });
+
+    ```
+
+    Promises aceitam uma função por parâmetro. Esta função será executada recebendo duas novas funções em seus argumentos – uma para resolver a promise, outra para rejeitá-la. Caso um erro aconteça dentro de uma promise, ela também será rejeitada.
+
+    Uma promise implementa a interface  _thenable_  e, por isso, possui dois métodos principais:
+
+    -   `then`: Executado quando a promise é resolvida.
+    -   `catch`: Executado em caso de rejeição (ou  _throw_).
+
+
+    ---
+
+    ## Promises
+
+    Quando resolvemos uma promise, podemos passar por parâmetro um valor que será recebido no método  _then_. Da mesma forma, ao rejeitarmos uma promise podemos passar um motivo para tal, um valor conhecido como  `reason`.
+
+    Tanto a função  _resolve_  quanto a  _reject_  podem ser interpretadas como callbacks, elas não possuem um “this” definido e podem ser executados apenas uma vez dentro de uma promise.
+
+    Já o método  _then_  pode ser usado várias vezes para a mesma promise.
+
+    Caso uma promise já tenha sido resolvida, qualquer chamada a seu  _then_  resolverá com o mesmo resultado imediatamente.
+    ---
+
+    ## Promises
+
+    Enquanto a promise está sendo executada (ainda esperando por ser resolvida ou rejeitada), ela encontra-se em estado  `pending`  (pendente). Para, então, passar ao estado  `rejected`  (rejeitada) ou  `resolved`  (resolvida).
+
+    A especificação de promises encontra-se descrita na página de definição das  [PROMISES PELO TC39](https://braziljs.org/blog/fetch-api-e-o-javascript/). Esta é uma especificação já bem definida e também amplamente implementada e suportada pelos principais navegadores, como pode ser visto na imagem abaixo (fonte: http://caniuse.com/#search=Promises).
+
+    ![Can I use Promises?](https://davidwalsh.name/cache)
+
+    ---
+
+    ## Promises
+
+    ### REJECT VS THROW
+
+    A ideia é que rejeitar uma promise signifique que o resultado dela não seja o esperado, mas isso é algo diferente de lançar um erro, como  [DR. AXEL RAUSCHMAYER](https://github.com/tc39)  menciona em  [SEU ARTIGO](https://tc39.github.io/proposal-cancelable-promises/).
+
+    Outra diferença importante é que, ao lançar um erro, o fluxo do código é interrompido e as instruções seguintes não serão executadas, ao passo que, ao executarmos a  _reject_, ela rejeitará sua promise (como em uma callback de erro), mas continuará a executar seu código. Observe o exemplo abaixo:
+
+    ```javascript
+    new Promise(function(resolve, reject){ 
+        console.log('A'); // será executado reject(); // irá rejeitar a promise 
+        console.log('B'); // será executado throw(new Error('Falhou')); // lança uma excessão 
+        console.log('C'); // não será executado 
+    });
+
+    ```
+    ---
+
+    ## Promises
+
+    Conceitualmente, você deveria lançar um erro quando uma exceção “esperada” for encontrada. Por exemplo, sua função esperava um parâmetro do tipo  _String_  e recebeu um objeto. Da mesma forma, uma promise irá rejeitar o que – assincronamente – atingiu um resultado inesperado, como uma falha a uma requisição ou ao tentar salvar algum dado utilizando a  _Cache API_, por exemplo.
+
+    ---
+
+    ## Promises
+
+    ### ENCADEANDO
+
+    Uma característica que torna o uso de promises ainda mais interessante é o encadeamento.
+
+    Uma promise pode receber em seu  _resolve_  uma outra promise. Esta, será resolvida então, somente quando a segunda promise for resolvida.
+
+    ```javascript
+    function getAddress () { 
+        return new Promise ((resolve, reject)=>{ setTimeout(resolve, 2000); }); 
+    }
+
+    function getUser () { 
+        return new Promise((resolve, reject)=>{ setTimeout(_=>resolve(getAddress()), 1000); }); 
+    }
+
+    getUser().then( result=>console.log('Done') ); 
+
+    ```
+
+    Na última linha deste exemplo, ao chamarmos a função  `getUser`, ela retornará imediatamente uma promise com status  _pending_, e seu  _then_  somente será executado daqui a  **3 segundos**, ou seja, depois que ambas as promises (getAddress e getUser) forem resolvidas.
+
+    ---
+
+    ## Promises
+
+    ### MÉTODOS ESTÁTICOS
+
+    Além disso, promises têm também alguns métodos estáticos úteis, tais como:
+
+    -   **all**:  `Promise.all([promise1, promise2, ...])`  Este método retorna uma promise pendente que será resolvida quando  **todas**  as promises passadas por parâmetro (em uma  _array_) forem resolvidas. Ela será rejeitada se qualquer uma das promises rejeitar.
+
+    ```javascript
+    Promise.all([
+      new Promise((resolve, reject)=>{
+        // ...
+      }),
+      new Promise((resolve, reject)=>{
+        // ...
+      }),
+      new Promise((resolve, reject)=>{
+        // ...
+      })
+    ]).then(result=>{
+      console.info('Ok');
+    }).catch(reason=>{
+      console.warn('Failed!', reason);
+    });
+
+    ```
+    ---
+
+    ## Promises
+
+    Neste exemplo, a chamada à função em  `then`  acontecerá somente quando  **todas**  as promises na array tiverem sido resolvidas. A função em  `catch`  será chamada caso qualquer uma delas falhe.
+
+    -   **race**:  `Promise.race([promise1, promise2, ...])`: também retorna uma promise pendente, mas ela será resolvida assim que qualquer uma das promises enviadas seja resolvida, ou seja, assim que a primeira delas resolver. Mas, se uma delas falhar antes de qualquer uma ser resolvida, então essa promise será rejeitada.
+
+    ```javascript
+    Promise.race([
+      new Promise((resolve, reject)=>{
+        // ...
+      }),
+      new Promise((resolve, reject)=>{
+        // ...
+      }),
+      new Promise((resolve, reject)=>{
+        // ...
+      })
+    ]).then(result=>{
+      console.info('Ok');
+    }).catch(reason=>{
+      console.warn('Failed!', reason);
+    });
+
+    ```
+    ---
+
+    ## Promises
+
+    Já neste exemplo, a função em  `then`  será evocada assim que a primeira promise resolver e as demais serão ignoradas. Note que as demais promises não serão interrompidas, ou seja, suas instruções continuarão normalmente, mas o  `then`  será chamado uma única vez, e será apenas para a primeira que resolver. Enquanto que o  `catch`  neste caso, será chamado caso uma promise falhe antes de qualquer outra promise resolver.
+
+    Vamos lá, exercite um pouco! Teste no console do seu navegador e brinque com os valores no  _setTimeout_  e alterne entre  _resolve_  e  _reject_  de cada letra no exemplo abaixo.
+
+    ---
+
+    ## Promises
+
+    ```javascript
+    Promise.race([
+      new Promise((resolve, reject)=>{
+        setTimeout(function(){
+          resolve('A');
+        }, 100);
+      }),
+      new Promise((resolve, reject)=>{
+        setTimeout(function(){
+          resolve('B');
+        }, 300);
+      }),
+      new Promise((resolve, reject)=>{
+        setTimeout(function(){
+          resolve('C');
+        }, 500);
+      }),
+      new Promise((resolve, reject)=>{
+        setTimeout(function(){
+          resolve('D');
+        }, 500);
+      }),
+      new Promise((resolve, reject)=>{
+        setTimeout(function(){
+          resolve('E');
+        }, 500);
+      })
+    ]).then(result=>{
+      console.info(result);
+    }).catch(reason=>{
+      console.warn('Failed: ', reason);
+    });
+
+    ```
+
+    ---
+
+    ## Promises
+
+    ### CONCLUINDO
+
+    As promises são muito úteis e nos ajudam a organizar e repensar nosso código, além de ser um padrão bem definido, pensado e testado.
+
+    As novas APIs também já estão sendo todas definidas baseadas no uso de promises, veja o exemplo da  [FETCH API](https://braziljs.org/blog/fetch-api-e-o-javascript/)  ou da  [CACHE API](https://davidwalsh.name/cache).
+
+    Outra coisa muito legal é que podemos ver que o  [TC39](https://github.com/tc39)  está ouvindo a comunidade ao evoluir esta feature. Por exemplo, a comunidade vem notando a necessidade de podermos cancelar promises, e a  [PROPOSTA PARA CANCELABLE PROMISES](https://tc39.github.io/proposal-cancelable-promises/)  tem avançado.
+
+    Acostume-se a usá-las no dia a dia e compreender como elas influenciam na evolução do próprio JavaScript, pois mais está por vir! O uso das promises é muito amplo e a linguagem tem evoluído nessa direção.
+
+    ---
+
+    ## Promises
+
+    Algumas fontes para leitura:
+
+    - [Promises no JavaScript](https://braziljs.org/blog/promises-no-javascript/)
+    - [Javascript - entendendo e criando suas próprias Promises](https://blog.da2k.com.br/2015/03/05/javascript-entendendo-e-criando-suas-proprias-promises/)
+    - [Controle de fluxo em javascript. Callback, promises e generators.](https://medium.com/@ericholiveira/controle-de-fluxo-em-javascript-callback-promises-e-generators-9f9e31e7d2ee)
+    - [Promessas em JavaScript](https://developers.google.com/web/fundamentals/primers/promises?hl=pt-br)
+    - [O que são promessas no JavaScript?](https://blog.taller.net.br/o-que-sao-promessas-javascript/)
+    - [Fluxo de execução assíncrono em JavaScript – Promises](https://tableless.com.br/fluxo-de-execucao-assincrono-em-javascript-promises/)
+    
+
+    ---
+
+    ## Async/Await
+
+    Async/Await é uma das novas funcionalidades do ES2017. Com ela é possível escrever código assíncrono como se estivéssemos escrevendo código síncrono. Essa funcionalidade já está disponível a partir da versão 7.6 do Node.js.
+
+
+    ---
+
+    ## Async/Await
+
+    ### SUPORTE
+
+    É chegada a hora de darmos mais um passo largo na especificação do ES8/ES2017 (atualmente em estágio 3). O time do  [CHROME ANUNCIOU SUPORTE OFICIAL AO ASYNC/AWAIT](https://www.chromestatus.com/feature/5643236399906816)  na versão 55 do navegador, pois já estão trabalhando na implementação das novidades do  [ES8/ES2017](http://www.2ality.com/2016/02/ecmascript-2017.html).
+
+    O  [JAYDSON](https://braziljs.org/blog/author/jaydson)  fez uma análise bem interessante sobre o histórico e o uso de  _async functions_  em um  [ESTUDO DE CASO DISPONÍVEL EM SEU GITHUB](https://github.com/jaydson/es7-async).
+
+    ---
+
+    ## Async/Await
+
+    ### ESPECIFICAÇÃO
+
+    As duas palavrinhas mágicas aqui são o  `async`  e o  `await`, e a especificação do  [TC39](https://github.com/tc39)  você pode  [LER AQUI](https://tc39.github.io/ecmascript-asyncawait). Uma função é definida como assíncrona quando ela contém o modificador  _async_  e deve, então, devolver uma promise.
+
+    Uma função somente pode esperar (await) por outra função assíncrona, caso ela também seja assíncrona (async).
+
+    ### ASYNC
+
+    ```javascript
+    const getUser = async function (){
+      return new Promise((resolve, reject)=>{
+        setTimeout(_=>{
+          resolve({ name: "Felipe" });
+        }, 2000);
+      });
+    };
+
+    ```
+
+    Neste caso, estamos retornando uma promise que será resolvida em dois segundos, mas poderíamos resolvê-la após alguma outra ação assíncrona.
+   
+
+    ---
+
+    ## Async/Await
+
+    ### AWAIT
+
+    O modificador  _await_  instruirá a JavaScript Engine a esperar pela resolução da  _função assíncrona_  antes de dar continuidade ao fluxo atual.
+
+    ```javascript
+    async function getUserFullData(){ 
+        var userData = await getUser(); 
+        var userAddress = await getUserAddr(userData); 
+        console.log(userData, userAddress); 
+    }
+
+    getUserFullData(); 
+
+    ```
+
+    No exemplo acima, a última linha nos retornará uma promise com status  _pending_, e esta promise somente será resolvida quando a última instrução da nossa função assíncrona (o  `console.log`) for executada.
+
+    O que acontece é que, sempre que a  _engine_  encontrar o  _token_  `await`, ela irá interromper o fluxo e aguardar pela resolução daquela instrução (que trata-se de uma promise ou outra função assíncrona).
+
+   
+
+    ---
+
+    ## Async/Await
+
+    ### EXEMPLOS DE ASYNC/AWAIT
+
+    Uma implementação útil para isso seria a criação do famoso (querido por uns, odiado por outros)  `sleep`  – impossível de implementar no JavaScript até então.
+
+    Vejam!
+
+    ```javascript
+    async function sleep (forHowLong) {
+      function timeout(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
+      await timeout(forHowLong);
+    }
+
+    ```
+
+    ---
+
+    ## Async/Await
+
+    Agora podemos usar a função  `sleep`  de duas formas. Como uma promise propriamente dita:
+
+    ```javascript
+    sleep(2000)
+      .then(result=>console.log(result));
+
+    ```
+
+    Ou como uma chamada em outra função assíncrona:
+
+    ```javascript
+    async function countFromThree () {
+      await sleep(0);
+      console.log(3);
+      await sleep(1000);
+      console.log(2);
+      await sleep(1000);
+      console.log(1);
+      await sleep(1000);
+      console.log('DONE');
+    }
+
+    ```
+   
+
+    ---
+
+    ## Async/Await
+
+    E então:
+
+    ```javascript
+    countFromThree(); ![Usando Async/Await como um contador][9]
+
+    ```
+
+    Claro que esta implementação foi muito básica.
+   
+
+
+    ---
+
+    ## Async/Await
+
+    Que tal usarmos a API do Github para listarmos todos os meus repositórios?
+
+    ```javascript
+    async function gitHub () {
+      const userName = 'jacksonfdam';
+      const url = 'https://api.github.com/users';
+      const reposResponse = await fetch(`${url}/${userName}/repos`);
+      const userRepos = await reposResponse.json();
+      console.log(userRepos)
+    }
+
+    ```
+
+    Notem que a chamada assíncrona ao  `fetch`  ficará esperando pela sua resolução (await). Assim que a promise de  _fetch_  for resolvida, a constante  `userRepos`  esperará pela resolução da promise de  `reposResponse.json()`, para somente então, partirmos para a instrução final, o  `console.log`.
+
+
+    ---
+    ## Async/Await
+    ### IMPORTANTE
+
+    É importante ressaltar que, apesar de assíncrono, seu código será  `serial`, ou seja, uma instrução (mesmo que assíncrona) será executada  **após**  a outra. Muitas vezes, utilizamos chamadas assíncronas paralelamente, e este não é o caso aqui. Todavia, como funções assíncronas que se utilizem do  `async`tornam-se promises, podemos usá-las em um fluxo tal qual usaríamos qualquer promise.
+
+    Uma coisa interessante é que podemos esperar pelo  `Promise.all`  também. Neste caso, podemos ter algumas promises em paralelo:
+
+    ```javascript
+
+    async function getInParallel () { 
+        let promises = []; 
+        promises.push(getImages()); 
+        promises.push(getJSONs()); 
+        promises.push(getData());
+
+        let [imgs, jsons, data] = await Promise.all(promises); 
+    }
+
+    ```
+
+    ---
+
+    ## Async/Await
+
+    Neste exemplo, as três promises (`getImages`,  `getJSONs`  e  `getData`) serão iniciadas simultânea e paralelamente, mas esperaremos por todas elas (`await Promise.all`). No final disso, teremos três novas variáveis (imgs, jsons e data) recebendo os respectivos resultados.
+
+    Claro, vale enfatizar que sair por aí usando  `Promise.all`  para tudo não é uma boa ideia! Para entender melhor como o  `Promise.all`  funciona, faça o seguinte: execute todas estas promises. Quando todas funcionarem, me avise. Caso uma falhar, abortamos todas.
+
+    Mas essa não é a solução para todas as situações. Por exemplo, podemos querer fazer um tratamento ou, até mesmo, um  _fallback_  diferente para cada promise que falhar.
+
+    ---
+
+    ## Async/Await
+    ### LIDANDO COM ERROS
+
+    Com o uso do  `await`, temos código assíncrono sendo executado de forma procedural e, portanto, podemos capturar erros que tenham ocorrido nele utilizando  `try/catch`. Sim, try/catch para suas funções assíncronas.
+
+    Mas, mais uma vantagem aqui é que, como as funções  `async`  se tornam promises, podemos escutar também por seu  `.catch`. Temos as duas opções. Agora, você não tem desculpas para não capturar problemas nos teus algoritmos!
+    ---
+
+    ## Async/Await
+
+    ### SUPORTE (USANDO HOJE)
+
+    O suporte ao  _async/await_  ainda está sendo implementado, mas o time do Chromium anunciou semana passada o suporte no  [CHROME 55](https://developers.google.com/web/fundamentals/getting-started/primers/async-functions)! Yay!
+
+    Já para  _transpilarmos_  nosso código a fim de usar  _async/await_, podemos utilizar o  [BABEL COM O PLUGIN TRANSFORM-ASYNC-TO-GENERATOR](https://babeljs.io/docs/plugins/transform-async-to-generator/).
+
+    Temos também o  [ASYNC TO GEN](https://github.com/leebyron/async-to-gen)  que é bem leve e transpilará suas funções  _async_  em  _generators_.
+
+    ---
+
+    ## Async/Await
+
+    ### Exemplo getMovies
+
+    Vamos a um exemplo um pouco mais complexo e completo utilizando a  The Movie Database API:
+
+    ```javascript
+    // uma função async (retornará uma promise) 
+    async function getMovies () { 
+        const api_key = '246bf886104d519a1d2bf62aef1054ff';
+        const movie_id = 269149;
+        const listOfMovies = await (await fetch(`http://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=${api_key}&page=1`)).json();
+        let lineup = await fetch(`https://api.themoviedb.org/3/movie/${movie_id}?api_key=${api_key}&language=en-US`);
+        return await lineup.json(); 
+    }
+
+   
+    // aqui, nós chamamos a função assíncrona 
+    // e esperamos pelo resultado ou por algum erro 
+
+    getMovies()
+        .then(result=>console.log(result))
+        .catch(reason=>console.warn(reason)); 
+    
+    ```
 
     ---
      # Fontes e Referências

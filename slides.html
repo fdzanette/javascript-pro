@@ -1287,8 +1287,126 @@
     # Transpiladores  
 
     ---
+    # Transpilers / Source-to-source compiler
+
+    Temos diversos sabores de  [linguagens de programação](https://pt.wikipedia.org/wiki/Lista_de_linguagens_de_programa%C3%A7%C3%A3o), para os mais variados ambientes e plataformas. De modo resumido temos linguagens de  [baixo nível](https://pt.wikipedia.org/wiki/Linguagem_de_programa%C3%A7%C3%A3o_de_baixo_n%C3%ADvel)e  [alto nível](https://pt.wikipedia.org/wiki/Linguagem_de_programa%C3%A7%C3%A3o_de_alto_n%C3%ADvel), ainda há as  [interpretadas](https://pt.wikipedia.org/wiki/Linguagem_interpretada),  [compiladas](https://pt.wikipedia.org/wiki/Linguagem_compilada)  e de  [script](https://pt.wikipedia.org/wiki/Linguagem_de_script).
+
+    Cada linguagem tem características, sintaxes e paradigmas únicos, existem muitos paradigmas de programação. As vezes uma linguagem possui similaridades sintáticas com outras, porém com comportamentos completamente diferentes.
+
+    > Saber a sintaxe de uma linguagem nunca vai garantir que você vai aprender outra linguagem com facilidade, há muitas armadilhas escondidas em sintaxes parecidas.
+
+    Muitas vezes uma linguagem possui uma sintaxe ou paradigma complexo ou verboso demais para ser produtivo usar ela diretamente. Nesse ponto que entram os  _transpilers_.
+    ---
+    # Transpilers / Source-to-source compiler
+
+    #### Tradução
+
+    De maneira geral, a função de um  _transpiler_  é  _traduzir_  um código escrito em linguagem para um código de outra.
+
+    Isso tem a capacidade de facilitar muito determinadas tarefas, pois no lugar de um código extremamente verboso e burocrático você pode usar uma sintaxe mais direta e agradável.
+
+    _Transpilers_  também podem trazer novas funcionalidades para uma linguagem, como novos tipos primitivos, novas funções, fluxos… Não há um limite definido para isso.
+
+    ---
+    # Transpilers / Source-to-source compiler
+
+    #### Ache o bug
+
+    Devido a natureza de alguns  _transpilers_ ou das linguagens de destino, algumas coisas podem ser particularmente difíceis de serem feitas, como o  _debugging_.
+
+    Devido a particularidades da linguagem de destino, achar a origem de um  _bug_pode ser um problema, afinal o código gerado não é o mesmo que você escreve.
+
+    > Não é recomendado usar um  _transpiler_  sem ter um bom conhecimento da linguagem de destino.
+
+    #### Transpiller, Linguagem, Superset…
+
+    Não da para entrar em muitos detalhes, porém é importante saber que existem  _transpilers_  que são linguagens novas trazendo pouca coisa da linguagem destino. Também há aquelas que só adicionam  _coisas novas_, mantendo a sintaxe original ainda válida.
+
+    Seja como for, é bom ler sobre o objetivo e filosofia do  _transpiler_  que você deseja usar. Esse tipo de coisa pode representar uma diferença muito grande no seu projeto.
+
+    ---
+    # Transpilers / Source-to-source compiler
+
+    ### CoffeeScript
+
+    ![](https://cdn-images-1.medium.com/max/1600/1*tI5IXkpztfhgR1hDenZvUg.png)
+
+    [CoffeeScript](http://coffeescript.org/)  foi um dos primeiros  _transpilers_  para JavaScript a ganhar popularidade.
+
+    Sua sintaxe e filosofia são baseadas no Ruby (comunidade de onde ele teve origem). Algumas de suas filosofias foram tão importantes que influenciaram algumas atualizações no  [ES2015](https://github.com/lukehoban/es6features#arrows).
+
+    Atualmente se discute se ele ainda é popular, devido a algumas coisas que ele “resolvia” já estarem  [presentes no ES2015](https://robots.thoughtbot.com/replace-coffeescript-with-es6).
+
+    ---
+    # Transpilers / Source-to-source compiler
+
+    ### TypeScript
+
+    ![](https://cdn-images-1.medium.com/max/1600/1*o6YyWsTgUSsIc6LzSmQWaA.png)
+
+    [TypeScript](https://www.typescriptlang.org/)  divide opiniões. Seu objetivo é permitir a tipagem estática do código JavaScript e com isso diminuir bugs e melhorar a leitura e manutenção do código, além disso ele adiciona recursos extras ao JavaScript
+
+    Ele é um  _superset_  do JavaScript, com isso um código válido em JavaScript é um código válido para o TypeScript.
+
+
+    ---
+    # Transpilers / Source-to-source compiler
+
+    ### Flow
+
+    ![](https://cdn-images-1.medium.com/max/1600/1*KyKLFig1vSBPv8c4icD1pQ.png)
+
+    [Flow](https://flowtype.org/)  é a alternativa para tipagem estática do Facebook. Muito popular com os usuários de  [React](https://facebook.github.io/react/), tem o mesmo objetivo que o TypeScript, porém ele se limita a isso apenas.
+
+    Atualmente tem se  [aproximado bastante do Babel](http://babeljs.io/blog/2016/10/24/6.18.0)  para tornar o fluxo de trabalho mais eficiente e otimizado.
+
+    ---
+    # Transpilers / Source-to-source compiler
+
+    ### Babel
+
+    ![](https://cdn-images-1.medium.com/max/1600/1*jYRZ2B8kPsvjRPLjl7syYQ.png)
+
+    [Babel](http://babeljs.io/)  é um caso a parte. Seu objetivo era fazer código escrito em ES6 virar ES5. Seu nome era  **6to5**  porém esse nome  [já não fazia sentido mediante](http://babeljs.io/blog/2015/02/15/not-born-to-die)  as atualizações constantes que o  _EcmaScript_  passou a ter.
+
+    Hoje, além de tornar um código escrito em ES2015+ compatível com navegadores mais antigos, ele é uma plataforma na qual vários tipos de transformações podem ser feitas.
+
+    Mais sobre essa mudança foi divulgada recentemente em  [The State of Babel](http://babeljs.io/blog/2016/12/07/the-state-of-babel).
+
+    > Babel é sem dúvida uma das ferramentas mais populares no ecossistema JavaScript. Muito do que temos hoje se deve babel.
+
+    #### Sujeira
+
+    Nem tudo são flores no Babel, infelizmente ao transformar o código ES2015+ para ES5 muito lixo é gerado, e há perda de performance nesse código (devido a sujeira), TypeScript também tem esse problema.  
+    Este é o preço a se pagar por tantos benefícios.
+
+    A vantagem que o Babel tem frente aos outros  _transpilers_  é que com o passar o tempo você pode remover ele do projeto. Com atualizações constantes, cada vez mais navegadores tem  [suporte quase completo ao ES2015+](http://kangax.github.io/compat-table/es6/)
+
+    ---
+    # Transpilers / Source-to-source compiler
+
+    ### JSX
+
+    [JSX](https://facebook.github.io/jsx/)  é uma especificação/linguagem de marcação, semelhante ao XML, que permite gerar código para  [V-DOM](http://reactkungfu.com/2015/10/the-difference-between-virtual-dom-and-dom/).
+
+    Ele é usado para facilitar a escrita desse tipo de código, que seria muito verboso sem o auxilio dele.
+    
+    ---
+    # Transpilers / Source-to-source compiler
+    ### Tipagem e JavaScript
+
+    A discussão da necessidade de  [tipagem no JavaScript](https://medium.com/javascript-scene/you-might-not-need-typescript-or-static-types-aa7cb670a77b)  não é nova. Porém uma coisa é indiscutível: A checagem de tipos só vai acontecer em  _tempo de compilação_.
+
+    Enquanto o código é compilado para JavaScript válido a checagem é feita e funciona muito bem, porém enquanto o código é executado (_runtime_) não existe essa checagem.
+
+    > TypeScript e Flow são muito bons, mas não corrigem falhas de programação.
+
+
+    ---
     class: center, middle
-    # Transpiladores
+    # Babel  
+
+    ---
     
     
     ---
@@ -1296,6 +1414,7 @@
 
     - https://developer.mozilla.org/pt-BR/docs/Learn/JavaScript/First_steps/O_que_e_JavaScript
     - https://classroom.udacity.com/courses/ud245
+    - https://github.com/jashkenas/coffeescript/wiki/list-of-languages-that-compile-to-js
     
   </textarea>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/remark/0.14.0/remark.min.js"></script>

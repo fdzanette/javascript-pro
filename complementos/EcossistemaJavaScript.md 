@@ -1,0 +1,55 @@
+# Ecossistema JavaScript — Parte 01: Plataformas
+
+JavaScript é uma linguagem multi-paradigma e multi-plataforma. Saber só a sintaxe base dele não é o suficiente para dizer que realmente sabe.
+
+#### EcmaScript
+
+[_EcmaScript_](https://pt.wikipedia.org/wiki/ECMAScript)  é o nome da especificação que determina como o JavaScript deve funcionar. Ele não é a linguagem em si.
+
+Em 2015 saiu o  [**ES6**](https://github.com/lukehoban/es6features), ou como é oficialmente chamado  [**ES2015**](https://themeteorchef.com/blog/what-is-es2015/). Essa atualização demorou muito para ser feita, porém agora as  **atualizações serão anuais**.
+
+### Plataformas e VMs
+
+_EcmaScript_  não está restrito ao navegador, existem várias plataformas onde o JavaScript pode ser executado.
+
+De modo geral existem os motores e as plataformas.
+
+Motores/_Engines_  são  _VMs (maquinas-virtuais)_  que executam o código JavaScript.
+
+-   [V8](https://developers.google.com/v8/)  ([Chrome](https://chrome.google.com/),  [Node](https://nodejs.org/),  [Opera](http://www.opera.com/), …)
+-   [SpiderMonkey](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey)  ([Firefox](https://www.mozilla.org/))
+-   [Chakra](https://github.com/Microsoft/ChakraCore)  ([MS Edge](https://www.microsoft.com/pt-br/windows/microsoft-edge))
+-   [Nitro](https://trac.webkit.org/wiki/JavaScriptCore)  ([Safari](http://www.apple.com/br/safari/),  [Qt 5](https://www.qt.io/qt5-4/))
+-   [Rhino](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/Rhino)  ([Java](https://www.oracle.com/java/index.html))
+-   [Nashorn](http://openjdk.java.net/projects/nashorn/)  ([Java](https://www.oracle.com/java/index.html))
+
+Existem “variações” em cada plataforma onde essas  _engines_  são aplicadas. API e features exclusivas de cada. De modo geral um código JavaScript vai ser executado normalmente em  _engines_  que seguem as especificações do  _EcmaScript_, porém se este código usa algum recurso exclusivo da  _engine_  ou até mesmo da plataforma não será possível usar ele em outras plataformas ou  _engines_.
+
+> Nesse emaranhado de plataformas, são os Navegadores e o Node.js que possuem impactos reais no seu dia-a-dia
+
+Um exemplo prático disso é o  [**DOM**](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model), velho conhecido de desenvolvedores front-end.
+
+```js
+document.querySelectorAll('ul li')
+```
+
+Esse código só funciona em navegadores, onde o DOM está implementado.  
+O mesmo se aplica ao código abaixo, que só funciona quando executado pelo Node.
+```js
+const fs = require('fs')  
+fs.rename('/tmp/hello', '/tmp/world', (err) => {  
+  if (err) throw err  
+  console.log('renamed complete')  
+})
+```
+
+### Presença
+
+JavaScript está presente em inúmeras plataformas. Não apenas no  _client-side_com os navegadores ou no  _server-side_  com o Node e derivados.  
+Ele está presente em Banco de Dados ([MongoDB](https://docs.mongodb.com/manual/mongo/)  e  [CouchDB](http://docs.couchdb.org/en/2.0.0/query-server/javascript.html#query-server-js)) e até mesmo IoT ([JXcore](https://github.com/jxcore/jxcore))
+
+Também não é novidade que é possível criar aplicações  _mobile_  com JavaScript. É possível criar aplicações híbridas ([cordova](https://cordova.apache.org/)) e até nativas ([NativeScript](https://www.nativescript.org/),  [React Native](https://facebook.github.io/react-native/)  e  [Weex](https://alibaba.github.io/weex/))
+
+Até mesmo ferramentas como  [Unity](https://unity3d.com/)  possuem suporte a JavaScript.
+
+Referência: [Ecossistema JavaScript — Parte 01: Plataformas](https://blog.codecasts.com.br/ecossistema-javascript-parte-01-plataformas-7a611608b58)

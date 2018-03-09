@@ -1407,8 +1407,84 @@
     # Babel  
 
     ---
+    # Babel
+    #### Instalando
+
+    Iremos utilizar o  [Babelify](https://github.com/babel/babelify), um módulo  [npm](https://www.npmjs.com/)  feito para funcionar juntamente com o  [Browserify](http://browserify.org/), outro módulo que empacota todos os seus requires para serem usados no browser.
+
+    Para instalar ambos, é necessário ter instalado em seu computador o  [Node.js](https://nodejs.org/), que juntamente instala o npm (Node Package Manager) ou Gerenciador de Pacotes Node.
+
+    Navegue via terminal até a raiz do seu projeto e digite o comando abaixo:
     
+    ```sh
+    npm install --save-dev browserify babelify babel-preset-es2015
+    ```
+
+    ---
+    # Babel
+
+    O comando irá instalar o Browserify, Babelify e o plugin es2015 do Babel, responsável por cuidar da conversão de ES2015 para ES5, além de salvá-los na lista de devDependencies do seu  [package.json](https://docs.npmjs.com/files/package.json). Nesta versão do Babel (6) nenhum plugin é instalado por padrão, por isso precisamos instalar ele à parte, você pode encontrar a lista completa de plugins  [aqui](http://babeljs.io/docs/plugins/).
+
+    ---
+    # Babel
+    ## Configurando
+
+    ### Script
+
+    Para configurarmos via script, abra o seu arquivo  [package.json](https://docs.npmjs.com/files/package.json), crie a sessão  [scripts](https://docs.npmjs.com/misc/scripts)  e nela vamos adicionar o código que irá transformar seu código ES2015 para ES5:
+
+    ```json
+    "build-browserify": "browserify ./src/meuarquivo.js -t \[ babelify --presets \[ es2015 \] \] -o ./dist/meunovoarquivo.js"
+    ```
+
+    ---
+    # Babel
+    ## Configurando
+
+    Explicando um pouco mais sobre o código acima:
+
+    ./src/meuarquivo.js – Este é o local do seu arquivo JS escrito nos padrões ES2015.
+
+    -t \[ babelify –presets \[ es2015 \] \] – A option -t se refere à transform, que utiliza de módulos de transformação terceiros, neste caso o  [Babelify](https://github.com/babel/babelify). Passamos o módulo que iremos utilizar e passamos uma option para o módulo (–presets), nesta option listamos os  [plugins](http://babeljs.io/docs/plugins/)  que iremos utilizar do Babel, que será o es2015.
+
+    -o ./dist/meunovoarquivo.js – A option -o se refere à output, aqui passamos o destino do nosso arquivo, que será gerado após a transformação.
     
+    ---
+    # Babel
+
+    ### Grunt
+
+    Podemos utilizar também o  [Grunt](http://gruntjs.com/), um Task Runner de Javascript, para realizarmos a transformação do arquivo. Para isso é necessário instalarmos mais um módulo npm, o  [grunt-browserify](https://www.npmjs.com/package/grunt-browserify)  (contando que você já tenha instalado em seu projeto os módulos  [grunt](https://www.npmjs.com/package/grunt)  e  [grunt-cli](https://www.npmjs.com/package/grunt-cli)).
+
+    Novamente na raiz do seu projeto via terminal, digite o comando abaixo:
+
+    ```sh
+    npm install --save-dev grunt-browserify
+    ```
+
+    ---
+    # Babel
+
+    Após a instalação, vá em seu arquivo  [Gruntfile.js](http://gruntjs.com/sample-gruntfile) e adicione no config:
+
+    ```json
+    browserify: {
+        dist: {
+            options: {
+                "transform": \[ \["babelify", { "presets": \["es2015"\] }\] \]
+            },
+            files: {
+                './dist/meunovoarquivo.js': \['./src/meuarquivo.js'\]
+            }
+        }
+    }
+    ```
+
+    Depois, carregue o módulo e registre uma task:
+
+    grunt.loadNpmTasks('grunt-browserify');
+    grunt.registerTask('default', \['browserify'\]);
+   
     ---
     #Referências
 

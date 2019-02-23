@@ -1,6 +1,4 @@
 
-![Targettrust](https://targettrust.com.br/wp-content/uploads/2018/02/TargetTrust.png)
-
 ![javascript](https://raw.githubusercontent.com/cerebrobr/adesivos/master/view/javascript.png)
 
 

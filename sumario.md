@@ -77,7 +77,7 @@
 - File API
 - Web Storage
 
-##JavaScript Avançado
+## JavaScript Avançado
 
 01. Estruturas de dados em Javascript
 - Instruções

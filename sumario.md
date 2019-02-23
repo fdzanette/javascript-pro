@@ -1,4 +1,4 @@
-##JavaScript Básico
+## JavaScript Básico
 
 1. JavaScript - Fundamentos
 - Declarando Variáveis

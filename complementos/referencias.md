@@ -29,3 +29,4 @@
 [   ] - http://loopinfinito.com.br/tag/javascript/
 [ x ] - https://github.com/Webschool-io/jargoes-programacao-funcional-para-iniciantes
 [   ] - https://github.com/Webschool-io/Curso-JavaScript-Design-Patterns
+[   ] - https://medium.com/reactbrasil/como-o-javascript-funciona-uma-vis%C3%A3o-geral-da-engine-runtime-e-da-call-stack-471dd5e1aa30

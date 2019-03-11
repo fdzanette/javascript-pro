@@ -90,11 +90,12 @@
     # Javascript   
 
     - APIs de navegadores já vem implementadas no navegador, e são capazes de expor dados do ambiente do computador, ou fazer coisas complexas e úteis. Por exemplo:
-    - A  API DOM (Document Object Model) permite a você manipular HTML e CSS, criando, removendo e mudando HTML, aplicando dinamicamente novos estilos para a sua página, etc. Toda vez que você vê uma janela popup aparecer em uma página, ou vê algum novo conteúdo sendo exibido (como nós vimos acima na nossa simples demonstração), isso é o DOM em ação.
+    - A API DOM (Document Object Model) permite a você manipular HTML e CSS, criando, removendo e mudando HTML, aplicando dinamicamente novos estilos para a sua página, etc. Toda vez que você vê uma janela popup aparecer em uma página, ou vê algum novo conteúdo sendo exibido (como nós vimos acima na nossa simples demonstração), isso é o DOM em ação.
     - A API de Geolocalização recupera informações geográficas. É assim que o Google Maps consegue entontrar sua localização e colocar em um mapa.
     - As APIs Canvas e WebGL permite a você criar gráficos 2D e 3D animados. Há pessoas fazendo algumas coisas fantásticas usando essas tecnologias web — veja Chrome Experiments e webglsamples.
     - APIs de áudio e vídeo como HTMLMediaElement e WebRTC permitem a você fazer coisas realmente interessantes com multimídia, tanto tocar música e vídeo em uma página da web, como capturar vídeos com a sua câmera e exibir no computador de outra pessoa (veja Snapshot demo para ter uma ideia).
   
+
     ---
     # Javascript
     
@@ -107,6 +108,75 @@
     Fracamente tipada:  Suporta conversão de tipos implícita, e não se declara o tipo na inicialização da variável.
 
     Baseada em protótipos: Estilo de orientação a objetos onde classes não existem, dessa forma o reuso (herança para linguagens baseadas em classe) é feito clonando objetos existentes que servem assim de protótipos.
+
+    ---
+    # Javascript  
+    ## Introdução ao ECMAScript
+
+    Sempre que você ler sobre JavaScript, você inevitavelmente verá um destes termos: ES3, ES5, ES6, ES7, ES8, ES2015, ES2016, ES2017, ECMAScript 2017, ECMAScript 2016, ECMAScript 2015… o que eles querem dizer?
+
+    Todos eles estão se referindo a um  **padrão**  , chamado ECMAScript.
+
+    ECMAScript é  **o padrão no qual o JavaScript é baseado**  e é freqüentemente abreviado para  **ES**  .
+
+    Além do JavaScript, outras linguagens implementam (ed) ECMAScript, incluindo:
+
+    -   _ActionScript_  (a linguagem de script do Flash), que está perdendo popularidade desde que o Flash será oficialmente descontinuado em 2020
+    -   _JScript_  (o dialeto de scripts da Microsoft), uma vez que no momento em que o JavaScript era suportado apenas pelo Netscape e as guerras de navegador estavam no auge, a Microsoft teve que construir sua própria versão para o Internet Explorer.
+
+    mas é claro que o JavaScript é a implementação  **mais popular**  e amplamente utilizada do ES.
+
+    ---
+    # Javascript  
+    ## Introdução ao ECMAScript
+
+    Por que esse nome estranho?  `Ecma International`  é uma associação de padrões suíça encarregada de definir padrões internacionais.
+
+    Quando o JavaScript foi criado, ele foi apresentado pela Netscape e pela Sun Microsystems à Ecma e eles lhe deram o nome ECMA-262 alias  **ECMAScript**  .
+
+    [Este comunicado de imprensa da Netscape e da Sun Microsystems](https://web.archive.org/web/20070916144913/http://wp.netscape.com/newsref/pr/newsrelease67.html&xid=17259,15700021,15700186,15700190,15700248,15700253&usg=ALkJrhj1ZlYlRxq8pFdR01LPE7icG1yAbQ)  (fabricante de Java) pode ajudar a descobrir a escolha do nome, que pode incluir questões legais e de branding pela Microsoft, que estava no comitê,  [segundo a Wikipedia](https://en.wikipedia.org/wiki/ECMAScript&xid=17259,15700021,15700186,15700190,15700248,15700253&usg=ALkJrhinuyDmR2vky_EAFn-sczznmfI_Zg)  .
+
+    Depois do IE9, a Microsoft parou de marcar seu suporte ES em navegadores como JScript e começou a chamá-lo de JavaScript (pelo menos, não consegui mais encontrar referências a ele).
+
+    Assim, a partir de 201x, a única linguagem popular que suporta a especificação ECMAScript é o JavaScript.
+
+
+    ---
+    # Javascript
+    ## Versão atual do ECMAScript
+
+    A versão atual do ECMAScript é  **ES2018**  .
+
+    Foi lançado em junho de 2018.
+
+    ---
+    # Javascript
+    ## O que é TC39
+
+    O TC39 é o comitê que desenvolve o JavaScript.
+
+    Os membros do TC39 são empresas envolvidas em JavaScript e fornecedores de navegadores, incluindo Mozilla, Google, Facebook, Apple, Microsoft, Intel, PayPal, SalesForce e outros.
+
+    Cada proposta de versão padrão deve passar por vários estágios,  [que são explicados aqui](https://tc39.github.io/process-document/&xid=17259,15700021,15700186,15700190,15700248,15700253&usg=ALkJrhgssHt0ASq62m6d9QxLDt1bF2rzKg)  .
+
+
+    ---
+    # Javascript
+    ## Versões ES
+
+    Eu achei intrigante porque às vezes uma versão ES é referenciada por número de edição e às vezes por ano, e estou confuso com o ano por acaso sendo -1 no número, o que aumenta a confusão geral em torno de JS / ES 😄
+
+    Antes do ES2015, as especificações do ECMAScript eram comumente chamadas por sua edição.  Então ES5 é o nome oficial da atualização da especificação ECMAScript publicada em 2009.
+
+    Por que isso acontece?  Durante o processo que levou ao ES2015, o nome foi alterado de ES6 para ES2015, mas como isso foi feito tarde, as pessoas ainda o referenciaram como ES6, e a comunidade não deixou o nome da edição para trás -  _o mundo ainda está chamando lançamentos ES número de edição_  .
+    
+    Esta tabela deve esclarecer um pouco as coisas:
+
+    ---
+    # Javascript
+    ## Versões ES
+
+    ![](https://cdn-images-1.medium.com/max/1600/1*ta8eBjBIGeJucahugjlopg.png)
 
     ---
     name: erros
@@ -1490,6 +1560,7 @@
     - https://developer.mozilla.org/pt-BR/docs/Learn/JavaScript/First_steps/O_que_e_JavaScript
     - https://classroom.udacity.com/courses/ud245
     - https://github.com/jashkenas/coffeescript/wiki/list-of-languages-that-compile-to-js
+    - https://medium.freecodecamp.org/es5-to-esnext-heres-every-feature-added-to-javascript-since-2015-d0c255e13c6e
     
   </textarea>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/remark/0.14.0/remark.min.js"></script>
